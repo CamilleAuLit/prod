@@ -46,13 +46,53 @@ spec:
           ports:
             - containerPort: {{ .Values.nginx.service.port }}
           volumeMounts:
+            - name: music-volume
+              mountPath: /music
+      volumes:
+        - name: music-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+---
+# Déploiement pour Nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-nginx
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-nginx
+    spec:
+      # On dit à ce pod d'utiliser le même secret pour télécharger l'image Nginx personnalisée
+      imagePullSecrets:
+        - name: gitlab-registry-secret
+      containers:
+        - name: nginx
+          # On utilise l'image Nginx qu'on vient de construire !
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.nginx.service.port }}
+          volumeMounts:
             # On ne monte que le volume pour la configuration.
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+            # --- NOUVEAU : On monte le volume de musique en lecture seule ---
+            - name: music-volume
+              mountPath: /usr/share/nginx/html/music # ou le chemin que vous préférez
+              readOnly: true
       volumes:
         # On ne garde que le volume pour la configuration.
         - name: nginx-config
           configMap:
             name: {{ .Release.Name }}-nginx-config
+        # --- NOUVEAU : On ajoute le volume de musique ---
+        - name: music-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
 
