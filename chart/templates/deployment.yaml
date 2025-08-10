@@ -50,11 +50,7 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
-            # --- NOUVEAU : On monte le volume de musique en lecture seule ---
-            - name: music-volume
-              mountPath: /usr/share/nginx/html/music # ou le chemin que vous préférez
-              readOnly: true
-      volumes:
+     volumes:
         # On ne garde que le volume pour la configuration.
         - name: nginx-config
           configMap:
