@@ -1,0 +1,26 @@
+# Service pour l'application FastAPI (non exposé à l'extérieur)
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-music-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.musicApp.service.port }}
+      targetPort: {{ .Values.musicApp.service.port }}
+  selector:
+    app: {{ .Release.Name }}-music-app
+---
+# Service pour Nginx (non exposé à l'extérieur, c'est l'Ingress qui s'en charge)
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-nginx
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.nginx.service.port }}
+      targetPort: {{ .Values.nginx.service.port }}
+  selector:
+    app: {{ .Release.Name }}-nginx
+

@@ -1,0 +1,31 @@
+# Valeurs par défaut pour le service music-app
+musicApp:
+  image:
+    repository: registry.gitlab.com/cedric.duboille/music/music-app # Adapte si besoin
+    tag: latest
+  service:
+    port: 8000
+
+# Configuration de l'Ingress (la porte d'entrée)
+nginx:
+  image:
+    repository: registry.gitlab.com/cedric.duboille/music/nginx # Adapte si besoin
+    tag: latest
+  service:
+    port: 80
+
+# Configuration de l'Ingress (la porte d'entrée)
+ingress:
+  enabled: true
+  host: nginx.yukino.li
+  
+  # --- NOUVEAU : On ajoute les annotations pour Traefik et Cert-Manager ---
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+
+  # --- NOUVEAU : On configure le certificat TLS ---
+  tls:
+    enabled: true
+    # Le nom du secret où Cert-Manager va stocker le certificat
+    secretName: nginx-yukino-li-tls

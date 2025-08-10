@@ -1,0 +1,7 @@
+apiVersion: v2
+name: music-app
+description: Un Chart Helm pour déployer le stack Music App
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
