@@ -1,0 +1,5 @@
+apiVersion: v2
+name: airsonic
+description: A Helm chart for running Airsonic
+version: 0.1.0
+appVersion: "v10.6.2"

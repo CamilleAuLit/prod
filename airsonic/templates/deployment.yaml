@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "airsonic.fullname" . }}
+  labels:
+    {{- include "airsonic.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "airsonic.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "airsonic.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 4040
+        volumeMounts:
+        - name: airsonic-data
+          mountPath: /var/airsonic
+        - name: airsonic-music
+          mountPath: /var/music
+      volumes:
+        - name: airsonic-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.data.claimName }}
+        - name: airsonic-music
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.music.claimName }}
