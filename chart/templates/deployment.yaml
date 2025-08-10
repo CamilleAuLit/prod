@@ -50,7 +50,8 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
-     volumes:
+      # Le bloc 'volumes' doit être aligné avec 'containers', sous 'spec'.
+      volumes:
         # On ne garde que le volume pour la configuration.
         - name: nginx-config
           configMap:
