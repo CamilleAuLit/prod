@@ -59,8 +59,4 @@ spec:
         - name: nginx-config
           configMap:
             name: {{ .Release.Name }}-nginx-config
-        # --- NOUVEAU : On ajoute le volume de musique ---
-        - name: music-volume
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim }}
 
