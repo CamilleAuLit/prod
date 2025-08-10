@@ -2,14 +2,14 @@
 musicApp:
   image:
     repository: registry.gitlab.com/cedric.duboille/music/music-app # Adapte si besoin
-    tag: b85583a92436ee9ba0891935de589a59c7b41b04
+    tag: e866b751ce20f3b4df3ec9682a9e8b5bfa7bd0f1
   service:
     port: 8000
 # Configuration de l'Ingress (la porte d'entrée)
 nginx:
   image:
     repository: registry.gitlab.com/cedric.duboille/music/nginx # Adapte si besoin
-    tag: b85583a92436ee9ba0891935de589a59c7b41b04
+    tag: e866b751ce20f3b4df3ec9682a9e8b5bfa7bd0f1
   service:
     port: 80
 # Configuration de l'Ingress (la porte d'entrée)
