@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # Le nom de cette application dans ArgoCD
+  name: infrastructure
+  # Important : l'application elle-même doit vivre dans le namespace d'ArgoCD
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # L'URL de TON dépôt Git
+    repoURL: 'https://github.com/CamilleAuLit/prod.git'
+    targetRevision: HEAD
+    # Le chemin que cette application doit surveiller
+    path: storage
+  destination:
+    # Le serveur de destination (le cluster local pour ArgoCD)
+    server: 'https://kubernetes.default.svc'
+    # Même si le PV est cluster-scoped, l'app a besoin d'un namespace de destination
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

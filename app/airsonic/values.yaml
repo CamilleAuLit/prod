@@ -77,10 +77,6 @@ affinity: {}
 
 persistence:
   enabled: true
-  storageClass: ""
-  data:
-    claimName: airsonic-data-pvc
-    size: 1Gi
-  music:
-    claimName: airsonic-music-pvc
-    size: 10Gi
+  claimName: airsonic-music-pvc
+  accessMode: ReadWriteMany
+  size: 900Gi

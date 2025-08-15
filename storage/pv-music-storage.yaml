@@ -1,0 +1,23 @@
+# ../../storage/pv-music-storage.yaml
+# Ce fichier définit le "disque dur" NFS pour la musique.
+# Tu l'appliqueras une seule fois à la main sur ton cluster avec `kubectl apply -f`
+# ou via une application ArgoCD dédiée à l'infra.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # Un nom clair pour identifier ce volume
+  name: nfs-music-pv
+spec:
+  capacity:
+    # La taille totale de ton partage. Ex: 1 Téraoctet
+    storage: 1Ti
+  volumeMode: Filesystem
+  accessModes:
+    # Permet à Airsonic ET au téléchargeur de lire/écrire en même temps
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    # Le chemin sur ton serveur NFS
+    path: /data/Music
+    # L'IP de ton serveur NFS
+    server: 192.168.0.121

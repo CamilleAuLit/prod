@@ -20,6 +20,13 @@ spec:
           image: "{{ .Values.musicApp.image.repository }}:{{ .Values.musicApp.image.tag }}"
           ports:
             - containerPort: {{ .Values.musicApp.service.port }}
+          volumeMounts:
+            - name: music-data
+              mountPath: /downloads
+      volumes:
+        - name: music-data
+          persistentVolumeClaim:
+            claimName: {{ .Value.persistence.existingClaim }}
 ---
 # Déploiement pour Nginx
 apiVersion: apps/v1

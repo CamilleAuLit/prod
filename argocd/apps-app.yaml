@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: applications
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/CamilleAuLit/prod.git'
+    targetRevision: HEAD
+    # Elle surveille le dossier contenant tes charts Helm
+    path: app
+  destination:
+    server: 'https://kubernetes.default.svc'
+    # Le namespace où tu veux déployer tes applications
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
