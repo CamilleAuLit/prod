@@ -1,19 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: music
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/CamilleAuLit/prod.git'
     targetRevision: HEAD
-    # Elle surveille le dossier contenant tes charts Helm
-    path: app
+    # On pointe précisément vers le dossier du chart Music
+    path: app/music
+    # On précise à ArgoCD que c'est un chart Helm
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    # Le namespace où tu veux déployer tes applications
-    namespace: default
+    namespace: music # Ou le namespace où tu veux déployer Music
   syncPolicy:
     automated:
       prune: true
