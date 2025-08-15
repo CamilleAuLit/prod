@@ -1,0 +1,20 @@
+# storage/pv-data.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-data-pv
+spec:
+  # Une taille qui correspond bien à la demande
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    # ReadWriteOnce est plus sécurisé pour des données de configuration
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  # L'étiquette magique !
+  storageClassName: airsonic-data
+  nfs:
+    # Assure-toi d'avoir un dossier dédié sur ton serveur NFS
+    path: /data/airsonic
+    server: 192.168.0.121

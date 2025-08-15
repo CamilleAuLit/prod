@@ -9,7 +9,7 @@ metadata:
 spec:
   accessModes:
     - {{ .Values.persistence.data.accessMode }}
-  storageClassName: ""
+  storageClassName: "airsonic-data"
   resources:
     requests:
       storage: {{ .Values.persistence.data.size }}
@@ -24,7 +24,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistence.music.claimName }}
 spec:
-  storageClassName: ""
+  storageClassName: "nfs-music"
   accessModes:
     - {{ .Values.persistence.music.accessMode }}
   resources:
@@ -40,7 +40,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistence.music1.claimName }}
 spec:
-  storageClassName: ""
+  storageClassName: "nfs-music"
   accessModes:
     - {{ .Values.persistence.music1.accessMode }}
   resources:
@@ -57,7 +57,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistence.music2.claimName }}
 spec:
-  storageClassName: ""
+  storageClassName: "nfs-music"
   accessModes:
     - {{ .Values.persistence.music2.accessMode }}
   resources:
