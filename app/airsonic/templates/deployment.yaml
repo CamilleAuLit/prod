@@ -26,11 +26,11 @@ spec:
         - name: airsonic-data
           mountPath: /var/airsonic
         - name: airsonic-music
-          mountPath: /var/music
+          mountPath: /music
         - name: airsonic-music1
-          mountPath: /var/music
+          mountPath: /music
         - name: airsonic-music2
-          mountPath: /var/music
+          mountPath: /music
       volumes:
         - name: airsonic-data
           persistentVolumeClaim:
