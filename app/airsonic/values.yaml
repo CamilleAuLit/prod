@@ -93,7 +93,7 @@ persistence:
     enabled: true
     claimName: airsonic-music1-pvc
     accessMode: ReadWriteMany
-    size: 1Ti 
+    size: 900Gi 
 
   music2:
     enabled: true
