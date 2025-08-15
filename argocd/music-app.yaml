@@ -16,7 +16,7 @@ spec:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: music # Ou le namespace où tu veux déployer Music
+    namespace: airsonic # Ou le namespace où tu veux déployer Music
   syncPolicy:
     automated:
       prune: true
