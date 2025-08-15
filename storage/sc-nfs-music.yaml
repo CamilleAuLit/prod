@@ -1,0 +1,7 @@
+# storage/sc-nfs-music.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-music # J'ai repris "nfs-music" de ton erreur, tu peux l'appeler "nfs-media" si tu préfères
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
