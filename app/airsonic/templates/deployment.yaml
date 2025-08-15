@@ -24,7 +24,7 @@ spec:
         - containerPort: 4040
         volumeMounts:
         - name: airsonic-data
-          mountPath: /config
+          mountPath: /var/airsonic
         - name: airsonic-music
           mountPath: /music
         - name: airsonic-music1
