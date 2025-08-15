@@ -1,14 +1,33 @@
 # ../../app/airsonic/templates/pvc.yaml
-# Ce template crée la demande de stockage si la persistance est activée.
-{{- if .Values.persistence.enabled }}
+
+# --- PVC pour les données d'Airsonic ---
+{{- if and .Values.persistence.data.enabled (not .Values.persistence.data.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.claimName }}
+  name: {{ .Values.persistence.data.claimName }}
 spec:
   accessModes:
-    - {{ .Values.persistence.accessMode }}
+    - {{ .Values.persistence.data.accessMode }}
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
+      storage: {{ .Values.persistence.data.size }}
+{{- end }}
+
+---
+
+# --- PVC pour la musique (si on voulait la créer ici) ---
+# Note : Dans notre cas, on ne l'utilise pas car on la partage avec 'music',
+# mais je te le montre pour l'exemple.
+{{- if and .Values.persistence.music.enabled (not .Values.persistence.music.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistence.music.claimName }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.music.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.music.size }}
 {{- end }}

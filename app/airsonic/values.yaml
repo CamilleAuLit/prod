@@ -76,10 +76,12 @@ tolerations: []
 affinity: {}
 
 persistence:
-  enabled: true
   data:
+    enabled: true
     claimName: airsonic-data-pvc
     size: 10Gi
   music:
+    enabled: true
     claimName: airsonic-music-pvc
+    accessMode: ReadWriteMany
     size: 900Gi
