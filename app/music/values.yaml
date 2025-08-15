@@ -2,14 +2,14 @@
 musicApp:
   image:
     repository: registry.gitlab.com/cedric.duboille/music/music-app # Adapte si besoin
-    tag: e866b751ce20f3b4df3ec9682a9e8b5bfa7bd0f1
+    tag: 39b9b7dd8e210aacb0e1b0de9e0c2d71b8078849
   service:
     port: 8000
 # Configuration de l'Ingress (la porte d'entrée)
 nginx:
   image:
     repository: registry.gitlab.com/cedric.duboille/music/nginx # Adapte si besoin
-    tag: e866b751ce20f3b4df3ec9682a9e8b5bfa7bd0f1
+    tag: 39b9b7dd8e210aacb0e1b0de9e0c2d71b8078849
   service:
     port: 80
 # Configuration de l'Ingress (la porte d'entrée)
@@ -28,4 +28,3 @@ ingress:
 # --- NOUVEAU : On ajoute la configuration pour le PVC existant ---
 persistence:
   existingClaim: "airsonic-music2-pvc"
-
