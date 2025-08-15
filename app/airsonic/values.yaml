@@ -85,18 +85,15 @@ persistence:
 
   music:
     enabled: true
-    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 900Gi
 
   music1:
     enabled: true
-    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 900Gi 
 
   music2:
     enabled: true
-    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 5Ti
