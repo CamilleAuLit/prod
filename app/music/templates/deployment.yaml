@@ -26,7 +26,7 @@ spec:
       volumes:
         - name: music-data
           persistentVolumeClaim:
-            claimName: {{ .Value.persistence.existingClaim }}
+            claimName: {{ .Values.persistence.existingClaim }}
 ---
 # Déploiement pour Nginx
 apiVersion: apps/v1
