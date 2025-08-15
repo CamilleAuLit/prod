@@ -28,6 +28,9 @@ spec:
         - name: airsonic-music
           mountPath: /var/music
       volumes:
+        - name: airsonic-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.data.claimName }}
         - name: airsonic-music
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.music.claimName }}
