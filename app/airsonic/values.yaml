@@ -1,4 +1,4 @@
-# Default values for airsonic.
+ Default values for airsonic.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -80,7 +80,7 @@ persistence:
   data:
     enabled: true
     claimName: airsonic-data
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     size: 10Gi
 
   music:
@@ -99,4 +99,4 @@ persistence:
     enabled: true
     claimName: airsonic-music2-pvc
     accessMode: ReadWriteMany
-    size: 5Ti
+
