@@ -21,13 +21,13 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.medias.claimName }}
+  name: {{ .Values.persistence.music.claimName }}
 spec:
   accessModes:
-    - {{ .Values.persistence.medias.accessMode }}
+    - {{ .Values.persistence.music.accessMode }}
   resources:
     requests:
-      storage: {{ .Values.persistence.medias.size }}
+      storage: {{ .Values.persistence.music.size }}
 {{- end }}
 
 ---
@@ -36,27 +36,27 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.medias.claimName }}
+  name: {{ .Values.persistence.music1.claimName }}
 spec:
   accessModes:
-    - {{ .Values.persistence.medias.accessMode }}
+    - {{ .Values.persistence.music1.accessMode }}
   resources:
     requests:
-      storage: {{ .Values.persistence.medias.size }}
+      storage: {{ .Values.persistence.music1.size }}
 {{- end }}
 
 ---
 
-# --- NOUVEAU: PVC pour les archives ---
+# --- NOUVEAU: PVC pour les music2 ---
 {{- if and .Values.persistence.music2.enabled (not .Values.persistence.music2.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.archives.claimName }}
+  name: {{ .Values.persistence.music2.claimName }}
 spec:
   accessModes:
-    - {{ .Values.persistence.archives.accessMode }}
+    - {{ .Values.persistence.music2.accessMode }}
   resources:
     requests:
-      storage: {{ .Values.persistence.archives.size }}
+      storage: {{ .Values.persistence.music2.size }}
 {{- end }}
