@@ -79,6 +79,7 @@ persistence:
   data:
     enabled: true
     claimName: airsonic-data-pvc
+    accessMode: ReadWriteMany
     size: 10Gi
   music:
     enabled: true
