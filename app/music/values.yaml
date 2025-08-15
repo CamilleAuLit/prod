@@ -27,4 +27,4 @@ ingress:
     secretName: nginx-yukino-li-tls
 # --- NOUVEAU : On ajoute la configuration pour le PVC existant ---
 persistence:
-  existingClaim: airsonic-music-pvc
+  existingClaim: airsonic-music2-pvc
