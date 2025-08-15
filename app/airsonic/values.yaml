@@ -77,6 +77,7 @@ affinity: {}
 
 persistence:
   enabled: true
-  claimName: airsonic-music-pvc
-  accessMode: ReadWriteMany
-  size: 900Gi
+  music:
+    claimName: airsonic-music-pvc
+    accessMode: ReadWriteMany
+    size: 900Gi

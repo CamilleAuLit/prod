@@ -26,5 +26,5 @@ ingress:
     # Le nom du secret où Cert-Manager va stocker le certificat
     secretName: nginx-yukino-li-tls
 # --- NOUVEAU : On ajoute la configuration pour le PVC existant ---
-persistance:
+persistence:
   existingClaim: airsonic-music-pvc
