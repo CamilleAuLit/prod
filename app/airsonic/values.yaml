@@ -79,24 +79,24 @@ persistence:
   
   data:
     enabled: true
-    claimName: airsonic-data-pvc
+    claimName: airsonic-data
     accessMode: ReadWriteMany
     size: 10Gi
 
   music:
     enabled: true
-    claimName: airsonic-music-pvc
+    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 900Gi
 
   music1:
     enabled: true
-    claimName: airsonic-music1-pvc
+    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 900Gi 
 
   music2:
     enabled: true
-    claimName: airsonic-music2-pvc
+    claimName: nfs-music
     accessMode: ReadWriteMany
     size: 5Ti
