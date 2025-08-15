@@ -1,0 +1,15 @@
+# storage/pv-archives.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-music2-pv
+spec:
+  capacity:
+    storage: 7Ti # Adapte la taille
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /data2/Music # Le chemin de ton partage pour les archives
+    server: 192.168.0.121

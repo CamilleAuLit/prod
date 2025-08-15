@@ -1,0 +1,15 @@
+# storage/pv-medias.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-music1-pv
+spec:
+  capacity:
+    storage: 1Ti # Adapte la taille
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /data1/Music # Le chemin de ton partage pour les médias
+    server: 192.168.0.121

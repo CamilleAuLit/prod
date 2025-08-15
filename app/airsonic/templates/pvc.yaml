@@ -1,4 +1,4 @@
-# ../../app/airsonic/templates/pvc.yaml
+# app/airsonic/templates/pvc.yaml
 
 # --- PVC pour les données d'Airsonic ---
 {{- if and .Values.persistence.data.enabled (not .Values.persistence.data.existingClaim) }}
@@ -16,18 +16,47 @@ spec:
 
 ---
 
-# --- PVC pour la musique (si on voulait la créer ici) ---
-# Note : Dans notre cas, on ne l'utilise pas car on la partage avec 'music',
-# mais je te le montre pour l'exemple.
+# --- NOUVEAU: PVC pour les médias ---
 {{- if and .Values.persistence.music.enabled (not .Values.persistence.music.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.music.claimName }}
+  name: {{ .Values.persistence.medias.claimName }}
 spec:
   accessModes:
-    - {{ .Values.persistence.music.accessMode }}
+    - {{ .Values.persistence.medias.accessMode }}
   resources:
     requests:
-      storage: {{ .Values.persistence.music.size }}
+      storage: {{ .Values.persistence.medias.size }}
+{{- end }}
+
+---
+
+{{- if and .Values.persistence.music1.enabled (not .Values.persistence.music1.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistence.medias.claimName }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.medias.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.medias.size }}
+{{- end }}
+
+---
+
+# --- NOUVEAU: PVC pour les archives ---
+{{- if and .Values.persistence.music2.enabled (not .Values.persistence.music2.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistence.archives.claimName }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.archives.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.archives.size }}
 {{- end }}
