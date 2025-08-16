@@ -15,9 +15,9 @@ keywords:
   - feed
 dependencies:
  - name: postgresql
-    version: 14.0.5
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
+   version: 14.0.5
+   repository: https://charts.bitnami.com/bitnami
+   condition: postgresql.enabled
 sources:
   - https://github.com/miniflux/v2
 annotations:
