@@ -1,29 +1,22 @@
-apiVersion: v2
-name: miniflux
-description: Miniflux is a minimalist and opinionated feed reader.
-home: https://charts.gabe565.com/charts/miniflux/
-icon: https://raw.githubusercontent.com/miniflux/logo/40cb83c/icon.svg
-type: application
-version: 0.9.2
-# renovate datasource=docker depName=ghcr.io/miniflux/miniflux
-appVersion: 2.2.5
-kubeVersion: ">=1.22.0-0"
-keywords:
-  - miniflux
-  - rss
-  - news
-  - feed
-dependencies:
- - name: postgresql
-   version: 14.0.5
-   repository: https://charts.bitnami.com/bitnami
-   condition: postgresql.enabled
-sources:
-  - https://github.com/miniflux/v2
-annotations:
-  artifacthub.io/changes: |-
-    - kind: changed
-      description: Update ghcr.io/miniflux/miniflux docker tag to v2.2.5
-  artifacthub.io/links: |-
-    - name: App Source
-      url: https://github.com/miniflux/v2
+# Fichier de l'Application ArgoCD à appliquer
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: miniflux
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    # Le namespace où tu veux installer Miniflux
+    namespace: miniflux 
+  
+  # C'est la partie la plus importante. On vise directement le dépôt Helm.
+  source:
+    # L'URL du dépôt Helm OFFICIEL de Miniflux
+    repoURL: 'https://miniflux.github.io/helm-charts/'
+    # Le nom du chart dans le dépôt
+    chart: 'miniflux'
+    # La version du chart que tu veux déployer (vérifie la dernière dispo)
+    targetRevision: '3.0.0'
+    
