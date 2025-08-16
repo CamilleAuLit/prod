@@ -12,7 +12,4 @@ dependencies:
     version: "0.16.1"
     repository: "https://charts.gabe565.com"
 
-  # La dépendance "common", avec la bonne URL de dépôt cette fois
-  - name: common
-    version: "1.5.1" # On utilise la version la plus standard pour ce chart
-    repository: "https://bjw-s.github.io/helm-charts" # <-- C'EST CETTE LIGNE QUI CHANGE
+
