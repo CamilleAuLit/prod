@@ -23,17 +23,6 @@ env:
   # -- !! METS ICI UN MOT DE PASSE SOLIDE POUR L'ADMIN MINIFLUX !!
   ADMIN_PASSWORD: "crashucehsabe"
 
-# -- Configuration du Service Kubernetes
-service:
-  main:
-    type: ClusterIP
-    ports:
-      http:
-        # -- Port du service, c'est celui que l'ingress va utiliser
-        port: 80
-        # -- Port cible sur le conteneur Miniflux (ne pas changer)
-        targetPort: 8080
-
 # -- Configuration de l'Ingress (pour l'accès externe)
 ingress:
   enabled: true
@@ -68,7 +57,3 @@ postgresql:
     # -- Taille du volume pour la base de données
     size: 10Gi
 
-# -- Configuration du ServiceMonitor pour Prometheus (désactivé par défaut)
-serviceMonitor:
-  main:
-    enabled: false
