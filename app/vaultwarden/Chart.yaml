@@ -8,5 +8,4 @@ appVersion: "1.0" # La version de ton app (optionnel)
 
 dependencies:
   - name: vaultwarden
-    version: "1.34.3" # La version du chart que tu veux utiliser
     repository: "https://charts.gabe565.com" # Le repo du chart Helm
