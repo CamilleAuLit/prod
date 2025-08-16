@@ -24,7 +24,7 @@ spec:
       releaseName: vaultwarden
       # 2. On spécifie que nos values locales doivent être utilisées
       valueFiles:
-        - values.yaml
+        - app/vaultwarden/values.yaml
       # 3. On ajoute une dépendance vers le chart Helm officiel
       # Argo CD va le fetcher pour nous
       # Pour cela, on ajoute un Chart.yaml dans le dossier `vaultwarden`
