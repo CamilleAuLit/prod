@@ -1,18 +1,18 @@
 # vaultwarden/Chart.yaml
 
 apiVersion: v2
-name: vaultwarden-wrapper # On lui donne un nom pour montrer que c'est notre wrapper
+name: vaultwarden-wrapper
 description: Mon wrapper pour déployer le chart Vaultwarden officiel.
 type: application
-version: 0.1.0 # La version de notre propre configuration
+version: 0.1.0
 
 dependencies:
-  # On déclare ici le VRAI chart qu'on veut déployer
+  # La dépendance pour Vaultwarden (celle-ci était correcte)
   - name: vaultwarden
-    version: "4.2.0" # La version du chart distant qu'on veut
+    version: "0.16.1"
     repository: "https://charts.gabe565.com"
 
-  # Et on déclare sa dépendance "common" comme on l'avait vu
+  # La dépendance "common", avec la bonne URL de dépôt cette fois
   - name: common
-    version: "1.4.0"
-    repository: "https://charts.gabe565.com"
+    version: "1.5.1" # On utilise la version la plus standard pour ce chart
+    repository: "https://bjw-s.github.io/helm-charts" # <-- C'EST CETTE LIGNE QUI CHANGE
