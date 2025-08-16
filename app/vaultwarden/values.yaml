@@ -18,7 +18,7 @@ persistence:
     retain: true
     storageClass: "vaultwarden-data"
     accessMode: ReadWriteOnce
-     size: 10Gi
+    size: 10Gi
 
 # -- Enable and configure postgresql database subchart under this key.
 #    For more options see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
