@@ -1,0 +1,39 @@
+# vaultwarden/values.yaml
+
+# Configuration générale de Vaultwarden
+# ---
+ingress:
+  enabled: true
+  host: vaultwarden.yukino.li
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  tls:
+    enabled: true
+    secretName: vaultwarden-tls
+  # Si tu utilises cert-manager pour le TLS, décommente les lignes suivantes
+  # tls:
+  #   - secretName: vaultwarden-tls
+  #     hosts:
+  #       - vault.tondomaine.com
+
+# Configuration de la persistance
+# ---
+persistence:
+  enabled: true
+  size: 10Gi # Taille du volume
+  # On spécifie le nom de la StorageClass
+  storageClassName: "vaultwarden-data"
+
+# Variables d'environnement pour Vaultwarden
+# ---
+env:
+  SIGNUPS_ALLOWED: "true"
+  INVITATIONS_ALLOWED: "true"
+  # Configuration SMTP (fortement recommandée)
+  # SMTP_HOST: "smtp.mailgun.org"
+  # SMTP_FROM: "vaultwarden@tondomaine.com"
+  # SMTP_PORT: "587"
+  # SMTP_SECURITY: "starttls"
+  # SMTP_USERNAME: "ton_username_smtp"
+  # SMTP_PASSWORD: "ton_mot_de_passe_smtp"

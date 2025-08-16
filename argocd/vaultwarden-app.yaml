@@ -1,0 +1,43 @@
+# apps/vaultwarden.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vaultwarden
+  namespace: argocd
+  # L'annotation finalizer est importante pour que la suppression en cascade fonctionne bien
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    # Le repo Git où se trouve cette configuration
+    repoURL: 'https://github.com/CamilleAuLit/prod.git' # <--- CHANGE CECI
+    targetRevision: HEAD # Branche à suivre (ex: main, master)
+    # Le chemin vers le "chart" que constitue notre configuration
+    path: app/aultwarden # <--- C'est le répertoire qu'on a créé
+
+    # On utilise le plugin Helm pour interpreter le répertoire
+    # On lui dit de prendre en compte notre fichier de values
+    helm:
+      # On va "wrapper" le chart Helm distant avec notre configuration locale
+      # 1. On spécifie le chart distant
+      releaseName: vaultwarden
+      # 2. On spécifie que nos values locales doivent être utilisées
+      valueFiles:
+        - values.yaml
+      # 3. On ajoute une dépendance vers le chart Helm officiel
+      # Argo CD va le fetcher pour nous
+      # Pour cela, on ajoute un Chart.yaml dans le dossier `vaultwarden`
+      # (Voir étape 5)
+
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: vaultwarden
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

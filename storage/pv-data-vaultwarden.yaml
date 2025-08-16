@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-data-miniflux-pv
+  name: nfs-data-vaultwarden-pv
 spec:
   # Une taille qui correspond bien à la demande
   capacity:
@@ -13,8 +13,8 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   # L'étiquette magique !
-  storageClassName: miniflux-data
+  storageClassName: vaultwarden-data
   nfs:
     # Assure-toi d'avoir un dossier dédié sur ton serveur NFS
-    path: /data2/miniflux
+    path: /data2/vaultwarden
     server: 192.168.0.121
