@@ -15,9 +15,9 @@ spec:
   # --- C'EST LA SECTION QUI RÈGLE TOUT ---
   source:
     # On va chercher le chart sur internet
-    repoURL: 'https://miniflux.github.io/helm-charts/'
+    repoURL: 'https://charts.miniflux.app/'
     chart: 'miniflux'
-    targetRevision: '3.0.0'
+    targetRevision: '3.1.0'
 
     # Et on applique ton fichier de valeurs perso qui est dans ton Git
     helm:
