@@ -14,6 +14,11 @@ spec:
       labels:
         {{- include "airsonic.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext:
+        runAsUser: {{ .Values.podSecurityContext.runAsUser }}
+        fsGroup: {{ .Values.podSecurityContext.fsGroup }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
@@ -24,7 +29,7 @@ spec:
         - containerPort: 4040
         volumeMounts:
         - name: airsonic-data
-          mountPath: /var/airsonic
+          mountPath: /config
         - name: airsonic-music
           mountPath: /music
         - name: airsonic-music1

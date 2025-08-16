@@ -25,9 +25,10 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
-
+podSecurityContext:
+  enabled: true
+  runAsUser: 1000  # <-- Remplace par l'UID de tes fichiers
+  fsGroup: 1000 
 securityContext: {}
   # capabilities:
   #   drop:
