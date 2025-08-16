@@ -1,37 +1,18 @@
+# vaultwarden/Chart.yaml
+
 apiVersion: v2
-name: vaultwarden
-description: Unofficial Bitwarden compatible server written in Rust.
-home: https://charts.gabe565.com/charts/vaultwarden/
-icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/d57b699/resources/vaultwarden-icon.svg
+name: vaultwarden-wrapper # On lui donne un nom pour montrer que c'est notre wrapper
+description: Mon wrapper pour déployer le chart Vaultwarden officiel.
 type: application
-version: 0.16.1
-# renovate datasource=docker depName=ghcr.io/dani-garcia/vaultwarden
-appVersion: 1.33.2-alpine
-kubeVersion: ">=1.22.0-0"
-keywords:
-  - vaultwarden
-  - bitwarden
-  - bitwarden_rs
-sources:
-  - https://github.com/dani-garcia/vaultwarden
+version: 0.1.0 # La version de notre propre configuration
+
 dependencies:
+  # On déclare ici le VRAI chart qu'on veut déployer
+  - name: vaultwarden
+    version: "4.2.0" # La version du chart distant qu'on veut
+    repository: "https://charts.gabe565.com"
+
+  # Et on déclare sa dépendance "common" comme on l'avait vu
   - name: common
-    repoURL: 'https://bjw-s.github.io/helm-charts'
-    version: 1.5.1
-  - name: mariadb
-    version: 20.1.1
-    repository: https://charts.bitnami.com/bitnami
-    condition: mariadb.enabled
-  - name: postgresql
-    version: 14.0.5
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
-annotations:
-  artifacthub.io/changes: |-
-    - kind: changed
-      description: Update ghcr.io/dani-garcia/vaultwarden docker tag to v1.33.2
-  artifacthub.io/links: |-
-    - name: App Source
-      url: https://github.com/dani-garcia/vaultwarden
-    - name: Chart Source
-      url: https://github.com/gabe565/charts/tree/main/charts/vaultwarden
+    version: "1.4.0"
+    repository: "https://charts.gabe565.com"
