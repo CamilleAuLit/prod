@@ -14,7 +14,7 @@ spec:
     repoURL: 'https://github.com/CamilleAuLit/prod.git' # <--- CHANGE CECI
     targetRevision: HEAD # Branche à suivre (ex: main, master)
     # Le chemin vers le "chart" que constitue notre configuration
-    path: app/aultwarden # <--- C'est le répertoire qu'on a créé
+    path: app/vaultwarden # <--- C'est le répertoire qu'on a créé
 
     # On utilise le plugin Helm pour interpreter le répertoire
     # On lui dit de prendre en compte notre fichier de values
