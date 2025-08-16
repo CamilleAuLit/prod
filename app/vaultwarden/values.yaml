@@ -37,3 +37,5 @@ env:
   # SMTP_SECURITY: "starttls"
   # SMTP_USERNAME: "ton_username_smtp"
   # SMTP_PASSWORD: "ton_mot_de_passe_smtp"
+  DATA_FOLDER: /data
+  ADMIN_TOKEN: "CQsieJZXOISLjpWiWYIGlvnGNWNDQ3XLuYpXkFgiu7KRSc1ODiRushFF6F4tvFlm"
