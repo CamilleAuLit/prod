@@ -20,10 +20,11 @@ ingress:
 # Configuration de la persistance
 # ---
 persistence:
-  enabled: true
-  size: 10Gi # Taille du volume
-  # On spécifie le nom de la StorageClass
-  storageClassName: "vaultwarden-data"
+  data:
+    enabled: true
+    size: 10Gi # Taille du volume
+    # On spécifie le nom de la StorageClass
+    storageClassName: "vaultwarden-data"
 
 # Variables d'environnement pour Vaultwarden
 # ---
