@@ -1,0 +1,9 @@
+# storage/sc-nfs-data.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  # Le nom doit correspondre EXACTEMENT à celui utilisé dans les PV/PVC
+  name: miniflux-data
+# Ceci est la ligne la plus importante !
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
