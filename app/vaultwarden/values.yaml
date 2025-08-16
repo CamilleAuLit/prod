@@ -18,11 +18,12 @@ ingress:
   tls:
     enabled: true
     secretName: vaultwarden-tls
+
 persistence:
   # -- Configure persistence settings for the chart under this key.
   # @default -- See [values.yaml](./values.yaml)
   data:
-    enabled: false
+    enabled: true
     retain: true
     storageClass: "vaultwarden-data"
     accessMode: ReadWriteOnce
