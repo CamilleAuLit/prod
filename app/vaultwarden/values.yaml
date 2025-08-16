@@ -65,3 +65,8 @@ podSecurityContext:
   runAsGroup: 65534
   # -- Volume binds will be granted to `nobody` group
   fsGroup: 65534
+
+env:
+  ADMIN_TOKEN : "5yy3UCtqVT4uZlmTMHEYXiXT9b9M67XkswvBLK18nwIwGpgr6sMczveQD41VCWXT"
+
+
