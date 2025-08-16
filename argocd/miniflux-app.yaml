@@ -1,3 +1,5 @@
+# Fichier : argocd/miniflux-app.yaml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -5,18 +7,23 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: miniflux
+
+  # --- C'EST LA SECTION QUI RÈGLE TOUT ---
   source:
-    repoURL: 'https://github.com/CamilleAuLit/prod.git'
-    targetRevision: HEAD
-    # On pointe précisément vers le dossier du chart Airsonic
-    path: app/miniflux
-    # On précise à ArgoCD que c'est un chart Helm
+    # On va chercher le chart sur internet
+    repoURL: 'https://miniflux.github.io/helm-charts/'
+    chart: 'miniflux'
+    targetRevision: '3.0.0'
+
+    # Et on applique ton fichier de valeurs perso qui est dans ton Git
     helm:
       valueFiles:
-        - values.yaml
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: miniflux # Ou le namespace où tu veux déployer Airsonic
+        - 'app/miniflux/values.yaml'
+        
   syncPolicy:
     automated:
       prune: true
