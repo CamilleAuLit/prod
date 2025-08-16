@@ -1,40 +1,69 @@
-# vaultwarden/values.yaml
 
-# Configuration générale de Vaultwarden
-# ---
+service:
+  # -- Configures service settings for the chart. Normally this does not need to be modified.
+  # @default -- See [values.yaml](./values.yaml)
+  main:
+    ports:
+      http:
+        port: 8080
+      websocket:
+        enabled: false
+        port: 3012
+
 ingress:
-  enabled: true
-  host: vaultwarden.yukino.li
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  tls:
-    enabled: true
-    secretName: vaultwarden-tls
-  # Si tu utilises cert-manager pour le TLS, décommente les lignes suivantes
-  # tls:
-  #   - secretName: vaultwarden-tls
-  #     hosts:
-  #       - vault.tondomaine.com
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See [values.yaml](./values.yaml)
+  main:
+    enabled: false
+    # hosts:
+    #   - host: chart-example.local
+    #     paths:
+    #       - path: /
 
-# Configuration de la persistance
-# ---
 persistence:
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See [values.yaml](./values.yaml)
   data:
-    enabled: true
-    type: emptyDir
+    enabled: false
+    retain: true
+    # storageClass: ""
+    # accessMode: ReadWriteOnce
+    # size: 1Gi
 
-# Variables d'environnement pour Vaultwarden
-# ---
-env:
-  SIGNUPS_ALLOWED: "true"
-  INVITATIONS_ALLOWED: "true"
-  # Configuration SMTP (fortement recommandée)
-  # SMTP_HOST: "smtp.mailgun.org"
-  # SMTP_FROM: "vaultwarden@tondomaine.com"
-  # SMTP_PORT: "587"
-  # SMTP_SECURITY: "starttls"
-  # SMTP_USERNAME: "ton_username_smtp"
-  # SMTP_PASSWORD: "ton_mot_de_passe_smtp"
-  DATA_FOLDER: /data
-  ADMIN_TOKEN: "CQsieJZXOISLjpWiWYIGlvnGNWNDQ3XLuYpXkFgiu7KRSc1ODiRushFF6F4tvFlm"
+# -- Enable and configure postgresql database subchart under this key.
+#    For more options see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+# @default -- See [values.yaml](./values.yaml)
+postgresql:
+  enabled: false
+  auth:
+    database: vaultwarden
+    postgresPassword: changeme
+  primary:
+    persistence:
+      enabled: false
+      # storageClass: ""
+      # size: 8Gi
+
+# -- Enable and configure mariadb database subchart under this key.
+#    For more options see [mariadb chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/mariadb)
+# @default -- See [values.yaml](./values.yaml)
+mariadb:
+  enabled: false
+  auth:
+    database: vaultwarden
+    username: vaultwarden
+    password: changeme
+    rootPassword: changeme
+  primary:
+    persistence:
+      enabled: false
+      # storageClass: ""
+      # size: 8Gi
+
+podSecurityContext:
+  # -- Run as `nobody` user
+  runAsUser: 65534
+  # -- Run as `nobody` group
+  runAsGroup: 65534
+  # -- Volume binds will be granted to `nobody` group
+  fsGroup: 65534
