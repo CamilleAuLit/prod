@@ -22,7 +22,7 @@ spec:
             - containerPort: {{ .Values.musicApp.service.port }}
           volumeMounts:
             - name: music-data
-              mountPath: /app/OrpheusDL/downloads
+              mountPath: /app/downloads
       volumes:
         - name: music-data
           persistentVolumeClaim:
