@@ -16,7 +16,7 @@ spec:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: airsonic # Ou le namespace où tu veux déployer Airsonic
+    namespace: miniflux # Ou le namespace où tu veux déployer Airsonic
   syncPolicy:
     automated:
       prune: true
