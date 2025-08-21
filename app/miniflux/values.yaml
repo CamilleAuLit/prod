@@ -1,59 +1,29 @@
 # values.yaml corrigé pour Miniflux
-
 image:
-  # -- image repository (ne pas changer)
   repository: ghcr.io/miniflux/miniflux
-  # -- image tag (pense à vérifier la dernière version stable sur le GitHub de Miniflux)
   tag: "2.1.3"
-  # -- image pull policy
   pullPolicy: IfNotPresent
 
-controller:
-  # -- Stratégie de mise à jour du déploiement
-  strategy: RollingUpdate
-
-# -- Variables d'environnement pour Miniflux
 env:
-  # -- Pas besoin de définir DATABASE_URL, le chart le fait automatiquement
-  #    quand postgresql.enabled est à true.
-
-  # -- Création de l'utilisateur admin au premier lancement
   CREATE_ADMIN: "1"
   ADMIN_USERNAME: admin
-  # -- !! METS ICI UN MOT DE PASSE SOLIDE POUR L'ADMIN MINIFLUX !!
-  ADMIN_PASSWORD: "crashucehsabe"
-
-# -- Configuration de l'Ingress (pour l'accès externe)
+  ADMIN_PASSWORD: "adminadmin"
+  BASE_URL: "https://mini.yukino.li"
 ingress:
-  enabled: true
-  # -- Ton nom de domaine pour accéder à Miniflux
-  host: mini.yukino.li
-  annotations:
-    # -- Indique à Kubernetes quel contrôleur d'ingress utiliser
-    kubernetes.io/ingress.class: traefik
-    # -- Indique à cert-manager de générer un certificat TLS avec cet issuer
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  tls:
+  main:
     enabled: true
-    # -- Nom du secret Kubernetes qui stockera le certificat TLS
-    secretName: mini-tls
-
-# -- Configuration de la base de données PostgreSQL incluse
-postgresql:
-  # -- On utilise la base de données fournie avec le chart
-  enabled: true
-  auth:
-    # -- Nom de la base de données qui sera créée
-    database: miniflux
-    # -- !! METS ICI UN MOT DE PASSE SOLIDE POUR L'UTILISATEUR POSTGRES !!
-    postgresPassword: "acrehucaeohuac"
-  
-  # -- IMPORTANT: Activation de la persistance pour ne pas perdre tes données
-  persistence:
-    enabled: true
-    # -- !! REMPLACE CECI par le nom d'une StorageClass de ton cluster !!
-    # -- (utilise "kubectl get sc" pour les lister)
-    storageClass: "miniflux-data" 
-    # -- Taille du volume pour la base de données
-    size: 10Gi
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # La structure correcte pour le host
+    hosts: # <- avec un 's', c'est une liste
+      - host: mini.yukino.li
+        paths:
+          - path: /
+            pathType: Prefix
+    # La structure correcte pour le tls
+    tls: # <- C'est aussi une liste
+      - hosts:
+          - mini.yukino.li
+        secretName: mini-tls
 
