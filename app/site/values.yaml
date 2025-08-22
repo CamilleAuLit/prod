@@ -15,6 +15,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: "default-redirectscheme@kubernetescrd"
   hosts:
     - host: yukino.li # Ton nom de domaine
       paths:
