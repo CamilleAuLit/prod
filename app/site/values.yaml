@@ -15,7 +15,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: "website-redirect-to-https@kubernetescrd" # IMPORTANT: utilise le bon namespace ici aussi
+#    traefik.ingress.kubernetes.io/router.middlewares: "website-redirect-to-https@kubernetescrd" # IMPORTANT: utilise le bon namespace ici aussi
   hosts:
     - host: yukino.li # Ton nom de domaine
       paths:
