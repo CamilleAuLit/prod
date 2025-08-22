@@ -1,0 +1,11 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  # On nomme notre middleware
+  name: redirect-to-https
+  # On le met dans le même namespace que ton site pour être bien organisé
+  namespace: website # IMPORTANT: Remplace "website" par le namespace où tu déploies ton site
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
