@@ -1,17 +1,14 @@
 # Default values for website chart.
 
 replicaCount: 1
-
 image:
   repository: registry.gitlab.com/cedric.duboille/portfolio-wiki-camille # Adapte si besoin
   pullPolicy: IfNotPresent
   # Le tag sera mis à jour par ta pipeline CI/CD !
-  tag: ""
-
+  tag: "8346e98a426e3e954c5371b0bc30666eaf975e10"
 service:
   type: ClusterIP
   port: 80
-
 ingress:
   enabled: true
   className: "traefik"
