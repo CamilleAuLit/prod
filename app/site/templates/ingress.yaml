@@ -1,10 +1,13 @@
 {{- if .Values.ingress.enabled -}}
-apiVersion: networking.k8s.ioio/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "website.fullname" . }}
+  # CHANGEMENT: On utilise directement le nom de la release
+  name: {{ .Release.Name }}
   labels:
-    {{- include "website.labels" . | nindent 4 }}
+    # CHANGEMENT: On définit des labels simples ici
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
@@ -27,7 +30,8 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "website.fullname" $ }}
+                # CHANGEMENT: On utilise le nom de la release pour pointer vers le bon service
+                name: {{ $.Release.Name }}
                 port:
                   name: http
           {{- end }}

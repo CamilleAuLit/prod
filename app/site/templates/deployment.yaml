@@ -1,18 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "website.fullname" . }}
+  # CHANGEMENT: On utilise directement le nom de la release
+  name: {{ .Release.Name }}
   labels:
-    {{- include "website.labels" . | nindent 4 }}
+    # CHANGEMENT: On définit des labels simples ici
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.ioio/instance: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "website.selectorLabels" . | nindent 6 }}
+      # CHANGEMENT: On utilise les mêmes labels simples pour la sélection
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        {{- include "website.selectorLabels" . | nindent 8 }}
+        # CHANGEMENT: Et ici aussi
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

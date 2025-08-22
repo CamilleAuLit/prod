@@ -1,9 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "website.fullname" . }}
+  # CHANGEMENT: On utilise directement le nom de la release
+  name: {{ .Release.Name }}
   labels:
-    {{- include "website.labels" . | nindent 4 }}
+    # CHANGEMENT: On définit des labels simples ici
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +15,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "website.selectorLabels" . | nindent 4 }}
+    # CHANGEMENT: On utilise les mêmes labels simples pour la sélection
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
