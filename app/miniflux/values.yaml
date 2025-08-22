@@ -1,13 +1,13 @@
 # values.yaml corrigé pour Miniflux
-image:
-  repository: ghcr.io/miniflux/miniflux
-  tag: "2.1.3"
-  pullPolicy: IfNotPresent
+#image:
+#  repository: ghcr.io/miniflux/miniflux
+#  tag: "2.1.3"
+#  pullPolicy: IfNotPresent
 
 env:
-  CREATE_ADMIN: "1"
+  CREATE_ADMIN: 1
   ADMIN_USERNAME: admin
-  ADMIN_PASSWORD: "adminadmin"
+  ADMIN_PASSWORD: "admin39"
   BASE_URL: "https://mini.yukino.li"
 ingress:
   main:
