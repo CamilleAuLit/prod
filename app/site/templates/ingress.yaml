@@ -2,24 +2,38 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  # CHANGEMENT: On utilise directement le nom de la release
   name: {{ .Release.Name }}
+  labels:
+    # CHANGEMENT: On définit des labels simples ici
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   tls:
+    {{- range .Values.ingress.tls }}
     - hosts:
-        - {{ .Values.ingress.host | quote }}
-      secretName: {{ .Values.ingress.tls.secretName }}
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
   rules:
-    - host: {{ .Values.ingress.host | quote }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ .Release.Name }}
+                # CHANGEMENT: On utilise le nom de la release pour pointer vers le bon service
+                name: {{ $.Release.Name }}
                 port:
-                  number: {{ .Values.service.port }}
+                  name: http
+          {{- end }}
+    {{- end }}
 {{- end }}
