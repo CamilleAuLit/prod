@@ -5,7 +5,7 @@ image:
   repository: registry.gitlab.com/cedric.duboille/portfolio-wiki-camille # Adapte si besoin
   pullPolicy: IfNotPresent
   # Le tag sera mis à jour par ta pipeline CI/CD !
-  tag: "cd0fd5eb73bcfa07f4bfba62e31dde2e5b0ba16c"
+  tag: "ec97dabe64f4d730f450bdf49d3bd2d3d048710d"
 service:
   type: ClusterIP
   port: 80
