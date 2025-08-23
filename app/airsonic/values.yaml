@@ -51,6 +51,8 @@ ingress:
   tls:
     enabled: true
     secretName: airsonic-tls
+    hosts:
+      - airsonic.yukino.li
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

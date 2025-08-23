@@ -15,16 +15,19 @@ nginx:
 # Configuration de l'Ingress (la porte d'entrée)
 ingress:
   enabled: true
+  className: "nginx"
   host: nginx.yukino.li
   # --- NOUVEAU : On ajoute les annotations pour Traefik et Cert-Manager ---
   annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    traefik.ingress.kubernetes.io/router.tls: "true"
   # --- NOUVEAU : On configure le certificat TLS ---
   tls:
     enabled: true
     # Le nom du secret où Cert-Manager va stocker le certificat
     secretName: nginx-yukino-li-tls
+    hosts:
+      - nginx.yukino.li
 # --- NOUVEAU : On ajoute la configuration pour le PVC existant ---
 persistence:
   existingClaim: "airsonic-music2-pvc"
