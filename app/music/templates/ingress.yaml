@@ -9,7 +9,7 @@ metadata:
     # On garde nos annotations pour Cert-Manager
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  # On configure le TLS pour que Cert-Manager crée le certificat
+  ingressClassName: {{ .Values.ingress.className }}
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
