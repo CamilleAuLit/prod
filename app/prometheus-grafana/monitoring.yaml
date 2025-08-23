@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  # On utilise 'sources' (au pluriel) pour combiner deux sources distinctes
+  sources:
+    # Source n°1 : Le chart Helm qui se trouve sur internet
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 58.2.0
+      helm:
+        # On dit à Helm d'utiliser un fichier de values qui vient de l'autre source
+        valueFiles:
+          # '$git' est une référence à la source nommée 'git' ci-dessous
+          - $git/apps/monitoring-values.yaml
+
+    # Source n°2 : Notre dépôt Git, qui contient le fichier de values
+    - repoURL: https://gitlab.com/projet-datascientest/fastapi-docker-prod.git
+      targetRevision: main
+      # On donne un nom à cette source pour pouvoir y faire référence
+      ref: git
+  
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+

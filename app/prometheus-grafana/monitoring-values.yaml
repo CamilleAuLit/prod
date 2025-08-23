@@ -1,0 +1,45 @@
+# Ce fichier contient TOUTES les configurations pour notre stack de monitoring.
+
+# --- Configuration de Grafana ---
+grafana:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    hosts:
+      - grafana.yukino.li
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - grafana.yukino.li
+
+# --- Configuration de Prometheus ---
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    hosts:
+      - prometheus.yukino.li
+    tls:
+      - secretName: prometheus-tls
+        hosts:
+          - prometheus.yukino.li
+  
+  prometheusSpec:
+    # On dit à Prometheus de regarder les ServiceMonitors dans TOUS les namespaces.
+    serviceMonitorNamespaceSelector: {}
+    
+    # On lui dit de prendre TOUS les ServiceMonitors qu'il trouve, peu importe leurs labels.
+    serviceMonitorSelector: {}
+    
+    storageSpec: {}
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
