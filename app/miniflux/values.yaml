@@ -42,7 +42,7 @@ ingress:
   # @default -- See [values.yaml](./values.yaml)
   main:
     enabled: true
-    className: "nginx"
+    ingressClassName: "nginx"
     hosts:
       - host: mini.yukino.li
         paths:
