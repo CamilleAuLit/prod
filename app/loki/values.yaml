@@ -19,9 +19,11 @@ backend:
 # Ta configuration de stockage en filesystem reste la même
 loki:
   storage:
-    type: 'filesystem'
+    type: "filesystem"
     filesystem:
       directory: /data/loki
+
+# On désactive les fonctionnalités de monitoring qui posent problème.
 monitoring:
   dashboards:
     enabled: false
@@ -33,25 +35,23 @@ monitoring:
     enabled: false
   selfMonitoring:
     enabled: false
+
+# CORRECTION : On désactive aussi le table manager
+tableManager:
+  enabled: false
+
 # Configuration de l'Ingress pour exposer Loki sur une URL
 ingress:
   enabled: true
   # Le nom de ta classe d'ingress (ex: nginx, traefik...)
   ingressClassName: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
   # Le nom de domaine pour accéder à Loki
   hosts:
     - host: loki.yukino.li # <-- MODIFIE CECI avec ton nom de domaine
       paths:
         - path: /
           pathType: Prefix # On envoie tout le trafic vers Loki
-  tls:
-    enabled: true
-    secretName: loki-tls
-    hosts:
-      - loki.yukino.li
 
   # Annotations, par exemple pour cert-manager qui gère les certificats HTTPS
   annotations:
@@ -62,5 +62,3 @@ ingress:
     - secretName: loki-tls # Nom du secret qui stockera le certificat
       hosts:
         - loki.yukino.li # <-- MODIFIE CECI avec ton nom de domaine
-
-
