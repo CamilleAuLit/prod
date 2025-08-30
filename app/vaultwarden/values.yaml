@@ -199,10 +199,9 @@ ingress:
       # kubernetes.io/tls-acme: "true"
     }
   tls:
-    enabled: true
-    secretName: vaultwarden-tls
-    hosts:
-      - vaultwarden.yukino.li
+    - secretName: vaultwarden-tls
+      hosts:
+        - vaultwarden.yukino.li
 
 # Traefik IngressRoute CRD
 ingressRoute:
