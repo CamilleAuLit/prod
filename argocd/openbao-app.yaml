@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: airsonic
+  name: openbao
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/CamilleAuLit/prod.git'
+    repoURL: "https://github.com/CamilleAuLit/prod.git"
     targetRevision: HEAD
-    # On pointe précisément vers le dossier du chart Airsonic
-    path: app/airsonic
+    # On pointe précisément vers le dossier du chart openbao
+    path: app/openbao
     # On précise à ArgoCD que c'est un chart Helm
     helm:
       valueFiles:
         - values.yaml
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: airsonic # Ou le namespace où tu veux déployer Airsonic
+    server: "https://kubernetes.default.svc"
+    namespace: openbao # Ou le namespace où tu veux déployer openbao
   syncPolicy:
     automated:
       prune: true
