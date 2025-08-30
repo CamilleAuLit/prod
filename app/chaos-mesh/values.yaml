@@ -556,13 +556,13 @@ webhook:
     - networkchaos
     - kernelchaos
     - stresschaos
-    - awschaos
-    - azurechaos
-    - gcpchaos
+    #  - awschaos
+    #  - azurechaos
+    #  - gcpchaos
     - dnschaos
     - jvmchaos
-    - schedule
-    - workflow
+    #  - schedule
+    #  - workflow
     - httpchaos
     - blockchaos
     - physicalmachinechaos
