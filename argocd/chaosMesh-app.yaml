@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: chaos
+  name: chaos-mesh
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: "https://github.com/CamilleAuLit/prod.git"
     targetRevision: HEAD
-    # On pointe précisément vers le dossier du chart chaos
+    # On pointe précisément vers le dossier du chart chaos-mesh
     path: app/chaos-mesh
     # On précise à ArgoCD que c'est un chart Helm
     helm:
@@ -16,7 +16,7 @@ spec:
         - values.yaml
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: chaos # Ou le namespace où tu veux déployer chaos
+    namespace: chaos-mesh # Ou le namespace où tu veux déployer chaos-mesh
   syncPolicy:
     automated:
       prune: true

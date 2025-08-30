@@ -607,7 +607,3 @@ chaosDlv:
     # empty tag means using the global images.tag
     tag: ""
   imagePullPolicy: IfNotPresent
-chaos-mesh:
-  crds:
-    annotations:
-      argocd.argoproj.io/sync-options: Replace=true
