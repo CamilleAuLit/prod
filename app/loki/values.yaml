@@ -40,8 +40,12 @@ monitoring:
 tableManager:
   enabled: false
 
-# CORRECTION : Et on désactive le cache des résultats
+# On désactive le cache des résultats
 resultsCache:
+  enabled: false
+
+# CORRECTION : On désactive les fonctionnalités de Grafana Enterprise
+enterprise:
   enabled: false
 
 # Configuration de l'Ingress pour exposer Loki sur une URL
