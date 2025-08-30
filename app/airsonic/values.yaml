@@ -28,7 +28,7 @@ podAnnotations: {}
 podSecurityContext:
   enabled: true
   runAsUser: 1000  # <-- Remplace par l'UID de tes fichiers
-  fsGroup: 1000 
+  fsGroup: 1000
 securityContext: {}
   # capabilities:
   #   drop:
@@ -96,7 +96,7 @@ persistence:
     enabled: true
     claimName: airsonic-music1-pvc
     accessMode: ReadWriteMany
-    size: 900Gi 
+    size: 900Gi
 
   music2:
     enabled: true
