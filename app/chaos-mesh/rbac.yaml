@@ -1,0 +1,12 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  namespace: chaos
+  name: account-chaos-manager-bdxul
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: chaos
+  name: role-chaos-manager-bdxul
