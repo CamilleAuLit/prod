@@ -22,7 +22,17 @@ loki:
     type: 'filesystem'
     filesystem:
       directory: /data/loki
-
+monitoring:
+  dashboards:
+    enabled: false
+  rules:
+    enabled: false
+  alerts:
+    enabled: false
+  serviceMonitor:
+    enabled: false
+  selfMonitoring:
+    enabled: false
 # Configuration de l'Ingress pour exposer Loki sur une URL
 ingress:
   enabled: true
