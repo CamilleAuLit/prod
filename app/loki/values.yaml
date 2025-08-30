@@ -44,9 +44,12 @@ tableManager:
 resultsCache:
   enabled: false
 
-# CORRECTION : On désactive les fonctionnalités de Grafana Enterprise
+# On désactive les fonctionnalités de Grafana Enterprise
 enterprise:
   enabled: false
+  # On doit aussi désactiver ses sous-composants pour éviter les erreurs
+  provisioner:
+    enabled: false
 
 # Configuration de l'Ingress pour exposer Loki sur une URL
 ingress:
