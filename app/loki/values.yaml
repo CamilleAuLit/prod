@@ -36,8 +36,12 @@ monitoring:
   selfMonitoring:
     enabled: false
 
-# CORRECTION : On désactive aussi le table manager
+# On désactive aussi le table manager
 tableManager:
+  enabled: false
+
+# CORRECTION : Et on désactive le cache des résultats
+resultsCache:
   enabled: false
 
 # Configuration de l'Ingress pour exposer Loki sur une URL
