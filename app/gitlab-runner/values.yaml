@@ -61,8 +61,7 @@ readinessProbe: {}
 #   periodSeconds: 60
 #   successThreshold: 1
 #   failureThreshold: 3
-runners:
-  secret: gitlab-runner-secret
+secret: gitlab-runner-secret
 ## How many runner pods to launch.
 ##
 # replicas: 1
