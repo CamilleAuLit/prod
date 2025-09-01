@@ -61,7 +61,8 @@ readinessProbe: {}
 #   periodSeconds: 60
 #   successThreshold: 1
 #   failureThreshold: 3
-
+runners:
+  secret: gitlab-runner-secret
 ## How many runner pods to launch.
 ##
 # replicas: 1
@@ -78,7 +79,7 @@ gitlabUrl: https://gitlab.com/
 ## be retrieved from your GitLab instance. It is the token of an already registered runner.
 ## ref: (we don't have docs for that yet, but we want to use an existing token)
 ##
-runnerToken: "glrt-Qhzg5bq8NUGbuPTVWBthsm86MQpwOjE3c2tteQp0OjMKdTplcmVpbhg.01.1j06c47et"
+runnerToken: ""
 #
 
 ## Unregister all runners before termination
