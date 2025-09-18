@@ -33,19 +33,19 @@ service:
 
 ingress:
   enabled: false
-  className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  hosts:
-    - host: vikunja.yukino.li
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - hosts:
-        - vikunja.yukino.li
-      secretName: vikunja-tls
+#  className: "nginx"
+#  annotations:
+#    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#  hosts:
+#    - host: vikunja.yukino.li
+#      paths:
+#        - path: /
+#          pathType: Prefix
+#  tls:
+#    - hosts:
+#        - vikunja.yukino.li
+#      secretName: vikunja-tls
 
 additionalContainers:
   # -- Set up the vikunja API container.
