@@ -23,14 +23,14 @@ replicaCount: 1
 ingress:
   enabled: true
   className: "nginx"
-  host: airsonic.yukino.li
+  host: nextcloud.yukino.li
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
-    - secretName: airsonic-tls
+    - secretName: nextcloud-tls
       hosts:
-        - airsonic.yukino.li
+        - nextcloud.yukino.li
 
   #
   #ingress:
