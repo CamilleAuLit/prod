@@ -28,10 +28,9 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
-    enabled: true
-    secretName: airsonic-tls
-    hosts:
-      - airsonic.yukino.li
+    - secretName: airsonic-tls
+      hosts:
+        - airsonic.yukino.li
 
   #
   #ingress:
