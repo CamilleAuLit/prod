@@ -32,7 +32,8 @@ service:
         port: 8080
 
 ingress:
-  enabled: false
+  main:
+    enabled: false
 #  className: "nginx"
 #  annotations:
 #    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
