@@ -32,7 +32,7 @@ service:
         port: 8080
 
 ingress:
-  enabled: true
+  enabled: false
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -41,11 +41,11 @@ ingress:
     - host: vikunja.yukino.li
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
-    - secretName: vikunja-tls
-      hosts:
+    - hosts:
         - vikunja.yukino.li
+      secretName: vikunja-tls
 
 additionalContainers:
   # -- Set up the vikunja API container.
