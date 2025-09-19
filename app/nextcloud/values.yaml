@@ -698,7 +698,6 @@ service:
 persistence:
   # Nextcloud Data (/var/www/html)
   enabled: true
-  annotations: {}
   ## nextcloud data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -711,9 +710,8 @@ persistence:
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  existingClaim: airsonic-music2-pvc
 
-  accessMode: ReadWriteMany
+  accessMode: ReadWriteOnce
   size: 500Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
