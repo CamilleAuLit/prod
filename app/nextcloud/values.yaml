@@ -711,7 +711,7 @@ persistence:
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  ## existingClaim: airsonic-music2-pvc
+  existingClaim: airsonic-music2-pvc
 
   accessMode: ReadWriteMany
   size: 500Gi
