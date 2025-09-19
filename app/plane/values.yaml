@@ -21,9 +21,9 @@ airgapped:
 
 ingress:
   enabled: true
-  className: "nginx"
+  ingressClass: "nginx"
   host: plane.yukino.li
-  annotations:
+  ingress_annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
