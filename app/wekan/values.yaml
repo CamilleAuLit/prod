@@ -100,15 +100,15 @@ root_url: https://wekan.local
 ingress:
   enabled: true
   className: "nginx"
-  host: wekan.yukino.li
+  hosts:
+    - wekan.yukino.li
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
-    enabled: true
-    secretName: wekan-tls
-    hosts:
-      - wekan.yukino.li
+    - secretName: wekan-tls
+      hosts:
+        - wekan.yukino.li
 
 route:
   enabled: false
