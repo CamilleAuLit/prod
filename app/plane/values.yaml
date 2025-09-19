@@ -26,9 +26,10 @@ ingress:
   ingress_annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+ssl:
   tls:
     enabled: true
-    secretName: plane-tls
+    tls_secret_name: plane-tls
     hosts:
       - plane.yukino.li
 
