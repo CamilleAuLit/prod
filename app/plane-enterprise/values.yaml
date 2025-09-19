@@ -22,15 +22,15 @@ airgapped:
 ingress:
   enabled: true
   className: "nginx"
-  host: airsonic.yukino.li
+  host: plane.yukino.li
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
     enabled: true
-    secretName: airsonic-tls
+    secretName: plane-tls
     hosts:
-      - airsonic.yukino.li
+      - plane.yukino.li
 
 #ingress:
 #  enabled: true
