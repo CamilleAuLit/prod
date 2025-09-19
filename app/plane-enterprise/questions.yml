@@ -1,0 +1,1072 @@
+questions:
+
+- variable: dockerRegistry.enabled
+  label: Docker Registry Enabled
+  type: boolean
+  default: false
+  group: "Docker Registry"
+  show_subquestion_if: true
+  subquestions:
+  - variable: dockerRegistry.registry
+    label: "Docker Registry Url"
+    type: string
+  - variable: dockerRegistry.loginid
+    label: "Login ID"
+    type: string
+  - variable: dockerRegistry.password
+    label: "Password/Token"
+    type: password
+
+- variable: planeVersion
+  label: Plane Version (Docker Image Tag)
+  type: string
+  default: v1.14.1
+  required: true
+  group: "Docker Registry"
+  subquestions:
+  - variable: services.web.image
+    label: Frontend Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/web-commercial"
+  - variable: services.space.image
+    label: Space Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/space-commercial"
+  - variable: services.admin.image
+    label: Admin Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/admin-commercial"
+  - variable: services.live.image
+    label: Live Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/live-commercial"
+  - variable: services.monitor.image
+    label: Monitor Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/monitor-commercial"
+  - variable: services.silo.image
+    label: Silo Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/silo-commercial"
+  - variable: services.api.image
+    label: Backend Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/backend-commercial"
+    description: "Used by API, Worker, Beat-Worker"
+  - variable: services.email_service.image
+    label: Email Service Docker Image
+    type: string
+    required: true
+    default: "artifacts.plane.so/makeplane/email-commercial"
+  - variable: env.storageClass
+    label: "Storage Class for Persistent Volume Claims"
+    type: storageclass
+
+- variable: license.licenseServer
+  label: "License Server"
+  type: string
+  required: true
+  group: "License Setup"
+  subquestions:
+  - variable: license.licenseDomain
+    label: "License Domain"
+    type: string
+    required: true
+
+- variable: airgapped.enabled
+  label: "Airgapped Enabled"
+  type: boolean
+  default: false
+  group: "License Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: airgapped.s3SecretName
+    label: "S3 Secret Name"
+    type: string
+    default: ""
+  - variable: airgapped.s3SecretKey
+    label: "S3 Secret Key"
+    type: string
+    default: ""
+
+- variable: services.web.pullPolicy
+  label: "Web Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "Web Setup"
+  subquestions:
+  - variable: services.web.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.web.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.web.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.web.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.web.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.web.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+
+- variable: services.space.pullPolicy
+  label: "Space Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "Spaces Setup"
+  subquestions:
+  - variable: services.space.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.space.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.space.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.space.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.space.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.space.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+
+- variable: services.admin.pullPolicy
+  label: "Admin Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "Admin Setup"
+  subquestions:
+  - variable: services.admin.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.admin.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.admin.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.admin.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.admin.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.admin.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+
+- variable: services.live.pullPolicy
+  label: "Live Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "Live Setup"
+  subquestions:
+  - variable: services.live.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.live.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.live.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.live.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.live.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.live.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+  - variable: env.live_sentry_dsn
+    label: "Sentry DSN"
+    type: string
+    default: ""
+  - variable: env.live_sentry_environment
+    label: "Sentry Environment"
+    type: string
+    default: "Development"
+  - variable: env.live_sentry_traces_sample_rate
+    label: "Sentry Traces Sample Rate"
+    type: string
+  - variable: env.live_server_secret_key
+    label: "Live Server Secret Key"
+    type: string
+    default: "htbqvBJAgpm9bzvf3r4urJer0ENReatceh"
+
+- variable: services.silo.enabled
+  label: "Install Silo Service"
+  type: boolean
+  default: true
+  group: "Silo Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.silo.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.silo.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.silo.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.silo.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.silo.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.silo.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+  - variable: env.silo_envs.mq_prefetch_count
+    label: "MQ Prefetch Count"
+    type: int
+    default: 10
+  - variable: env.silo_envs.batch_size
+    label: "Batch Size"
+    type: int
+    default: 60
+  - variable: env.silo_envs.request_interval
+    label: "Request Interval"
+    type: int
+    default: 400
+  - variable: env.silo_envs.sentry_dsn
+    label: "Silo Sentry DSN"
+    type: string
+    default: ""
+  - variable: env.silo_envs.sentry_environment
+    label: "Silo Sentry Environment"
+    type: string
+    default: "development"
+  - variable: env.silo_envs.sentry_traces_sample_rate
+    label: "Silo Sentry Traces Sample Rate"
+    type: number
+    default: 0.1
+  - variable: env.silo_envs.hmac_secret_key
+    label: "Silo HMAC Secret Key"
+    type: string
+    default: ""
+  - variable: env.silo_envs.aes_secret_key
+    label: "Silo AES Secret Key"
+    type: string
+    default: "dsOdt7YrvxsTIFJ37pOaEVvLxN8KGBCr"
+  - variable: env.silo_envs.cors_allowed_origins
+    label: "Silo CORS Allowed Origins"
+    type: string
+    default: ""
+
+- variable: services.silo.connectors.slack.enabled
+  label: "Slack Integration"
+  type: boolean
+  default: false
+  group: "Silo Connectors"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.silo.connectors.slack.client_id
+    label: "Slack Client ID"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.slack.client_secret
+    label: "Slack Client Secret"
+    type: string
+    default: ""
+
+- variable: services.silo.connectors.github.enabled
+  label: "Github App Integration"
+  type: boolean
+  default: false
+  group: "Silo Connectors"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.silo.connectors.github.client_id
+    label: "Github Client ID"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.github.client_secret
+    label: "Github Client Secret"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.github.app_name
+    label: "Github App Name"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.github.app_id
+    label: "Github App ID"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.github.private_key
+    label: "Github Private Key"
+    type: string
+    default: ""
+
+- variable: services.silo.connectors.gitlab.enabled
+  label: "Gitlab App Integration"
+  type: boolean
+  default: false
+  group: "Silo Connectors"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.silo.connectors.gitlab.client_id
+    label: "Gitlab Client ID"
+    type: string
+    default: ""
+  - variable: services.silo.connectors.gitlab.client_secret
+    label: "Gitlab Client Secret"
+    type: string
+    default: ""
+
+- variable: services.monitor.pullPolicy
+  label: "Monitor Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "Monitor Setup"
+  subquestions:
+  - variable: services.monitor.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.monitor.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.monitor.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.monitor.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.monitor.volumeSize
+    label: "Volume Size"
+    type: string
+    default: "100Mi"
+  - variable: services.monitor.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+
+- variable: services.api.pullPolicy
+  label: "API Pull Policy"
+  type: enum
+  options:
+  - "Always"
+  - "IfNotPresent"
+  - "Never"
+  default: "Always"
+  group: "API Setup"
+  subquestions:
+  - variable: services.api.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.api.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.api.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.api.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.api.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.api.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+  - variable: env.cors_allowed_origins
+    label: "CORS Allowed Origins"
+    type: string
+    default: ""
+  - variable: env.sentry_dsn
+    label: "Sentry DSN"
+    type: string
+    default: ""
+  - variable: env.sentry_environment
+    label: "Sentry Environment"
+    type: string
+    default: "Development"
+  - variable: env.secret_key
+    label: "Random Secret Key"
+    type: string
+    required: true
+    default: "60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5"
+  - variable: env.api_key_rate_limit
+    label: "API Key Rate Limit"
+    type: string
+    default: "60/minute"
+
+- variable: services.worker.replicas
+  label: "Default Replica Count"
+  type: int
+  default: 1
+  group: "Worker Setup"
+  subquestions:
+  - variable: services.worker.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.worker.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.worker.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.worker.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+- variable: services.beatworker.replicas
+  label: "Default Replica Count"
+  type: int
+  default: 1
+  group: "Beat Worker Setup"
+  subquestions:
+  - variable: services.beatworker.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.beatworker.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.beatworker.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.beatworker.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+- variable: services.email_service.enabled
+  label: "Enable Email Service"
+  type: boolean
+  default: false
+  group: "Email Service Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.email_service.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.email_service.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.email_service.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.email_service.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.email_service.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: env.email_service_envs.smtp_domain
+    label: "SMTP Domain"
+    type: string
+    default: ""
+  - variable: ssl.issuer
+    label: "SSL Issuer"
+    type: enum
+    options:
+    - "http"
+    - "cloudflare"
+    - "digitalocean"
+    default: "http"
+  - variable: ssl.server
+    label: "Let's Encrypt Server URL"
+    type: string
+    default: "https://acme-v02.services.api.letsencrypt.org/directory"
+  - variable: ssl.email
+    label: "Let's Encrypt Reg. Email"
+    type: string
+    default: "plane@example.com"
+  - variable: ssl.token
+    label: "Provider API Token"
+    type: password
+    default: ""
+    description: "Not required for 'http' issuer"
+    show_if: "ssl.issuer=cloudflare || ssl.issuer=digitalocean"
+
+- variable: services.outbox_poller.enabled
+  label: "Enable Outbox Poller"
+  type: boolean
+  default: false
+  group: "Outbox Poller Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.outbox_poller.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.outbox_poller.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.outbox_poller.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.outbox_poller.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.outbox_poller.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.outbox_poller.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+  - variable: env.outbox_poller_envs.memory_limit_mb
+    label: "Memory Limit"
+    type: int
+    default: 400
+  - variable: env.outbox_poller_envs.interval_min
+    label: "Interval Min"
+    type: number
+    default: 0.25
+  - variable: env.outbox_poller_envs.interval_max
+    label: "Interval Max"
+    type: number
+    default: 2
+  - variable: env.outbox_poller_envs.batch_size
+    label: "Batch Size"
+    type: int
+    default: 250
+  - variable: env.outbox_poller_envs.memory_check_interval
+    label: "Memory Check Interval"
+    type: int
+    default: 30
+  - variable: env.outbox_poller_envs.pool.size
+    label: "Pool Size"
+    type: int
+    default: 4
+  - variable: env.outbox_poller_envs.pool.min_size
+    label: "Pool Min Size"
+    type: int
+    default: 2
+  - variable: env.outbox_poller_envs.pool.max_size
+    label: "Pool Max Size"
+    type: int
+    default: 10
+  - variable: env.outbox_poller_envs.pool.timeout
+    label: "Pool Timeout"
+    type: number
+    default: 30.0
+  - variable: env.outbox_poller_envs.pool.max_idle
+    label: "Pool Max Idle"
+    type: number
+    default: 300.0
+  - variable: env.outbox_poller_envs.pool.max_lifetime
+    label: "Pool Max Lifetime"
+    type: number
+    default: 3600.0
+  - variable: env.outbox_poller_envs.pool.reconnect_timeout
+    label: "Pool Reconnect Timeout"
+    type: number
+    default: 5.0
+  - variable: env.outbox_poller_envs.pool.health_check_interval
+    label: "Pool Health Check Interval"
+    type: number
+    default: 60
+
+- variable: services.automation_consumer.enabled
+  label: "Enable Automation Consumer"
+  type: boolean
+  default: false
+  group: "Automation Consumer Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.automation_consumer.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.automation_consumer.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.automation_consumer.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.automation_consumer.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.automation_consumer.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.automation_consumer.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+  - variable: env.automation_consumer_envs.event_stream_queue_name
+    label: "Event Stream Queue Name"
+    type: string
+    default: "plane.event_stream.automations"
+  - variable: env.automation_consumer_envs.event_stream_prefetch
+    label: "Event Stream Prefetch"
+    type: int
+    default: 10
+  - variable: env.automation_consumer_envs.exchange_name
+    label: "Exchange Name"
+    type: string
+    default: "plane.event_stream"
+  - variable: env.automation_consumer_envs.event_types
+    label: "Event Types"
+    type: string
+    default: "issue"
+
+- variable: services.iframely.enabled
+  label: "Enable Iframely"
+  type: boolean
+  default: false
+  group: "Iframely Setup"
+  show_subquestion_if: true
+  subquestions:
+  - variable: services.iframely.image
+    label: "Docker Image"
+    type: string
+    default: "artifacts.plane.so/makeplane/iframely:v1.2.0"
+  - variable: services.iframely.pullPolicy
+    label: "Iframely Pull Policy"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+    default: "Always"
+  - variable: services.iframely.replicas
+    label: "Default Replica Count"
+    type: int
+    default: 1
+  - variable: services.iframely.memoryLimit
+    label: "Memory Limit"
+    type: string
+    default: 1000Mi
+  - variable: services.iframely.cpuLimit
+    label: "CPU Limit"
+    type: string
+    default: 500m
+  - variable: services.iframely.memoryRequest
+    label: "Memory Request"
+    type: string
+    default: 50Mi
+  - variable: services.iframely.cpuRequest
+    label: "CPU Request"
+    type: string
+    default: 50m
+  - variable: services.iframely.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+
+- variable: services.redis.local_setup
+  label: "Install Redis"
+  type: boolean
+  default: true
+  group: "Redis Setup"
+  subquestions:
+  - variable: services.redis.image
+    label: "Docker Image"
+    type: string
+    default: "valkey/valkey:7.2.5-alpine"
+    show_if: "services.redis.local_setup=true"
+  - variable: services.redis.pullPolicy
+    label: "Redis Pull Policy"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+    default: "IfNotPresent"
+  - variable: services.redis.servicePort
+    label: Port
+    type: int
+    default: 6379
+    show_if: "services.redis.local_setup=true"
+  - variable: services.redis.volumeSize
+    label: "Volume Size"
+    type: string
+    default: "500Mi"
+    show_if: "services.redis.local_setup=true"
+  - variable: services.redis.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+    show_if: "services.redis.local_setup=true"
+  - variable: env.remote_redis_url
+    label: "Remote Redis URL"
+    type: string
+    default: "redis://"
+    show_if: "services.redis.local_setup=false"
+
+- variable: services.postgres.local_setup
+  label: "Install Postgres"
+  type: boolean
+  default: true
+  group: "Postgres Setup"
+  # show_subquestion_if: true
+  subquestions:
+  - variable: services.postgres.image
+    label: "Docker Image"
+    type: string
+    default: "postgres:15.7-alpine"
+    show_if: "services.postgres.local_setup=true"
+  - variable: services.postgres.pullPolicy
+    label: "Postgres Pull Policy"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+    default: "IfNotPresent"
+    show_if: "services.postgres.local_setup=true"
+  - variable: services.postgres.servicePort
+    label: Service Port
+    type: int
+    default: 5432
+    show_if: "services.postgres.local_setup=true"
+  - variable: services.postgres.volumeSize
+    label: "Volume Size"
+    type: string
+    default: "5Gi"
+    show_if: "services.postgres.local_setup=true"
+  - variable: env.pgdb_username
+    label: "Username"
+    type: string
+    default: "plane"
+    show_if: "services.postgres.local_setup=true"
+  - variable: env.pgdb_password
+    label: "Password"
+    type: password
+    default: "plane"
+    show_if: "services.postgres.local_setup=true"
+  - variable: env.pgdb_name
+    label: "DB Name"
+    type: string
+    default: "plane"
+    show_if: "services.postgres.local_setup=true"
+  - variable: services.postgres.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+    show_if: "services.postgres.local_setup=true"
+  - variable: env.pgdb_remote_url
+    label: "Remote URL"
+    type: string
+    default: "postgresql://"
+    show_if: "services.postgres.local_setup=false"
+
+- variable: services.rabbitmq.local_setup
+  label: "Install RabbitMQ"
+  type: boolean
+  default: true
+  group: "RabbitMQ Setup"
+  subquestions:
+  - variable: services.rabbitmq.image
+    label: "Docker Image"
+    type: string
+    default: "rabbitmq:3.13.6-management-alpine"
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.pullPolicy
+    label: "RabbitMQ Pull Policy"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+    default: "IfNotPresent"
+  - variable: services.rabbitmq.servicePort
+    label: Service Port
+    type: int
+    default: 5672
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.managementPort
+    label: Management Port
+    type: int
+    default: 15672
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.assign_cluster_ip
+    label: "Assign ClusterIP"
+    type: boolean
+    default: false
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.volumeSize
+    label: "Volume Size"
+    type: string
+    default: "100Mi"
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.default_user
+    label: "Username"
+    type: string
+    default: "plane"
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.default_password
+    label: "Password"
+    type: password
+    default: "plane"
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: services.rabbitmq.external_rabbitmq_url
+    label: "Remote URL"
+    type: string
+    show_if: "services.rabbitmq.local_setup=false"
+
+- variable: services.minio.local_setup
+  label: "Install Minio"
+  type: boolean
+  default: true
+  group: "Storage Setup"
+  subquestions:
+  - variable: services.minio.image
+    label: "Docker Image"
+    type: string
+    default: "minio/minio:latest"
+    show_if: "services.minio.local_setup=true"
+  - variable: services.minio.pullPolicy
+    label: "Minio Pull Policy"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+    default: "IfNotPresent"
+  - variable: services.minio.image_mc
+    label: "MinIO Client Docker Image"
+    type: string
+    default: "minio/mc:latest"
+    show_if: "services.minio.local_setup=true"
+  - variable: services.minio.root_user
+    label: "Root User"
+    type: string
+    default: "admin"
+    show_if: "services.minio.local_setup=true"
+  - variable: services.minio.root_password
+    label: "Root Password"
+    type: password
+    default: "password"
+    show_if: "services.minio.local_setup=true"
+  - variable: services.minio.volumeSize
+    label: "Volume Size"
+    type: string
+    default: "5Gi"
+    show_if: "services.minio.local_setup=true"
+  - variable: services.minio.assign_cluster_ip
+    label: "Assign Cluster IP"
+    type: boolean
+    default: false
+    show_if: "services.minio.local_setup=true"
+  - variable: env.aws_access_key
+    label: "AWS Access Key"
+    type: string
+    default: ""
+    show_if: "services.minio.local_setup=false"
+  - variable: env.aws_secret_access_key
+    label: "AWS Secret Key"
+    type: password
+    default: ""
+    show_if: "services.minio.local_setup=false"
+  - variable: env.aws_region
+    label: "AWS Region"
+    type: string
+    default: ""
+    show_if: "services.minio.local_setup=false"
+  - variable: env.aws_s3_endpoint_url
+    label: "AWS S3 Endpoint URL"
+    type: string
+    default: ""
+    show_if: "services.minio.local_setup=false"
+  - variable: env.docstore_bucket
+    label: "Bucket Name"
+    type: string
+    default: "uploads"
+  - variable: env.doc_upload_size_limit
+    label: "File Upload Size Limit"
+    type: string
+    default: "5242880"
+  - variable: services.minio.env.minio_endpoint_ssl
+    label: "Minio Endpoint SSL"
+    type: boolean
+    default: false
+    show_if: "services.minio.local_setup=true"
+
+- variable: ingress.enabled
+  label: "Enable Ingress"
+  type: boolean
+  required: true
+  default: true
+  group: "Ingress"
+  # show_subquestion_if: true
+  subquestions:
+  - variable: ingress.minioHost
+    label: "Minio Host"
+    type: string
+    default: ""
+    show_if: "services.minio.local_setup=true"
+  - variable: ingress.rabbitmqHost
+    label: "Rabbitmq Host"
+    type: string
+    default: ""
+    show_if: "services.rabbitmq.local_setup=true"
+  - variable: ingress.ingressClass
+    label: "Ingress Classname"
+    type: string
+    required: true
+    default: "nginx"
+    show_if: "ingress.enabled=true"
+
+- variable: ssl.createIssuer
+  label: "Create Issuer"
+  type: boolean
+  default: false
+  group: "Ingress"
+  show_if: "ingress.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: ssl.issuer
+    label: "SSL Issuer"
+    type: enum
+    options:
+    - "http"
+    - "cloudflare"
+    - "digitalocean"
+    default: "http"
+  - variable: ssl.server
+    label: "Let's Encrypt Server URL"
+    type: string
+    default: "https://acme-v02.services.api.letsencrypt.org/directory"
+  - variable: ssl.email
+    label: "Let's Encrypt Reg. Email"
+    type: string
+    default: "plane@example.com"
+  - variable: ssl.token
+    label: "Provider API Token"
+    type: password
+    default: ""
+    description: "Not required for 'http' issuer"
+    show_if: "ssl.issuer=cloudflare || ssl.issuer=digitalocean"
+  - variable: ssl.generateCerts
+    label: "Enable to generate certificates"
+    type: boolean
+    default: false
+
+- variable: ssl.tls_secret_name
+  label: "Custom TLS Secret Name"
+  type: string
+  default: ""
+  group: "Ingress"
+  show_if: "ssl.createIssuer=false"
+
+- variable: external_secrets.rabbitmq_existingSecret
+  label: "RabbitMQ Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"
+- variable: external_secrets.pgdb_existingSecret
+  label: "Postgres Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"
+- variable: external_secrets.doc_store_existingSecret
+  label: "Doc Store and Minio Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"
+- variable: external_secrets.app_env_existingSecret
+  label: "App Envs Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"
+- variable: external_secrets.live_env_existingSecret
+  label: "Live Envs Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"
+- variable: external_secrets.silo_env_existingSecret
+  label: "Silo Envs Secrets File Name"
+  type: string
+  default: ""
+  group: "External Secrets"

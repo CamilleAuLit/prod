@@ -1,0 +1,88 @@
+{{- if .Values.services.silo.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Name }}-silo
+  labels:
+    app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-silo
+spec:
+  type: ClusterIP
+  {{- if not .Values.services.silo.assign_cluster_ip }}
+  clusterIP: None
+  {{- end }}
+  ports:
+  - name: silo-3000
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-silo
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Name }}-silo-wl
+spec:
+  replicas: {{ .Values.services.silo.replicas | default 1}}
+  selector:
+    matchLabels:
+      app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-silo
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      labels:
+        app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-silo
+      annotations:
+        timestamp: {{ now | quote }}
+    spec:
+      initContainers:
+      - name: wait-for-rabbitmq
+        image: busybox
+        command:
+          - /bin/sh
+        args:
+          - '-c'
+          - >-
+            if echo "$AMQP_URL" | grep -q "rabbitmq.{{ .Release.Namespace }}.svc.{{ .Values.env.default_cluster_domain | default "cluster.local" }}"; then 
+              echo "Waiting for local RabbitMQ..."; 
+              until nslookup {{ .Release.Name }}-rabbitmq.{{ .Release.Namespace }}.svc.{{ .Values.env.default_cluster_domain | default "cluster.local" }} > /dev/null 2>&1; do
+                echo "RabbitMQ not ready..."; 
+                sleep 5; 
+              done; 
+              echo "RabbitMQ is up!"; 
+            else 
+              echo "Skipping wait, using external RabbitMQ"; 
+            fi;
+        envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-silo-vars
+              optional: false
+      containers:
+      - name: {{ .Release.Name }}-silo
+        imagePullPolicy: Always
+        image: {{ .Values.services.silo.image | default "artifacts.plane.so/makeplane/silo-commercial" }}:{{ .Values.planeVersion }}
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: {{ .Values.services.silo.memoryRequest | default "50Mi" | quote }}
+            cpu: {{ .Values.services.silo.cpuRequest | default "50m" | quote }}
+          limits:
+            memory: {{ .Values.services.silo.memoryLimit  | default "1000Mi" | quote }}
+            cpu: {{ .Values.services.silo.cpuLimit | default "500m" | quote}}
+        envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-silo-vars
+              optional: false
+          - secretRef:
+              name: {{ if not (empty .Values.external_secrets.silo_env_existingSecret) }}{{ .Values.external_secrets.silo_env_existingSecret }}{{ else }}{{ .Release.Name }}-silo-secrets{{ end }}
+              optional: false
+      serviceAccount: {{ .Release.Name }}-srv-account
+      serviceAccountName: {{ .Release.Name }}-srv-account
+---
+{{- end }}
