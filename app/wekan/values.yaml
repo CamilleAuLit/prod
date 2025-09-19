@@ -99,7 +99,7 @@ root_url: https://wekan.local
 #  #      - wekan-example.local
 ingress:
   enabled: true
-  className: "nginx"
+  ingressClass: "nginx"
   hosts:
     - wekan.yukino.li
   annotations:
