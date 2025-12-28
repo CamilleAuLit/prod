@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/CamilleAuLit/prod.git'
+    targetRevision: HEAD
+    # On pointe précisément vers le dossier du chart kafka
+    path: app/kafka
+    # On précise à ArgoCD que c'est un chart Helm
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kafka # Ou le namespace où tu veux déployer kafka
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
