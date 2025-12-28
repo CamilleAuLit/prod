@@ -1,23 +1,19 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
 metadata:
-  name: strimzi-operator
-  namespace: argocd
+  name: kafka
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: prod-cluster
 spec:
-  project: default
-  source:
-    chart: strimzi-kafka-operator
-    repoURL: https://strimzi.io/charts/
-    # CHANGE ICI : 0.40.0 -> 0.43.0 (ou 0.44.0 si dispo)
-    targetRevision: 0.45.0 
-    helm:
-      releaseName: strimzi-operator
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: kafka
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  replicas: 3
+  roles:
+    - broker
+    - controller
+  storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: 15Gi
+        deleteClaim: true
