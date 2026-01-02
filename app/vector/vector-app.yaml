@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://helm.vector.dev
     chart: vector
-    targetRevision: 0.34.0
+    targetRevision: 0.38.0
     helm:
       values: |
         role: Stateless-Aggregator
