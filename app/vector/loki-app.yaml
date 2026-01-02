@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vector-aggregator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.vector.dev
+    chart: vector
+    targetRevision: 0.34.0
+    helm:
+      values: |
+        role: Stateless-Aggregator
+        
+        customConfig:
+          data_dir: "/vector-data-dir"
+          api:
+            enabled: true
+            address: "0.0.0.0:8686"
+            
+          # --- SOURCES (INPUT) ---
+          sources:
+            kafka_source:
+              type: "kafka"
+              # Ton service Kafka interne (Port 9092 = PLAINTEXT interne)
+              bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
+              topics: ["topic-test-cedric"]
+              group_id: "vector-k8s-group"
+              decoding:
+                codec: "json"
+
+          # --- SINKS (OUTPUT) ---
+          sinks:
+            loki_sink:
+              type: "loki"
+              inputs: ["kafka_source"]
+              # L'adresse interne du service Loki qu'on vient d'installer
+              endpoint: "http://loki.monitoring.svc:3100"
+              encoding:
+                codec: "json"
+              labels:
+                service: "{{ service }}"
+                source: "kafka-vector"
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
