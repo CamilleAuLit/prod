@@ -40,7 +40,7 @@ spec:
               encoding:
                 codec: "json"
               labels:
-                service: "{{ service }}"
+                service: '{{ "{{" }} service }}'
                 source: "kafka-vector"
 
   destination:
