@@ -1,54 +1,57 @@
-rabbitmq:
-  image:
-    registry: docker.io
-    repository: rabbitmq
-    tag: 4.2.2-management
-    pullPolicy: IfNotPresent
-  auth:
-    username: admin
-    password: "1234" # Change-le !
-  extraPlugins:
-    - rabbitmq_mqtt
-    - rabbitmq_management
-    - rabbitmq_peer_discovery_k8s
-  service:
-    type: LoadBalancer
-    extraPorts:
-      - name: mqtt
-        port: 1883
-        targetPort: 1883
-        protocol: TCP
-  persistence:
-    enabled: true
-    storageClass: "local-path" # Le standard sur K3s
-    size: 2Gi
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 256Mi
-  ingress:
-    enabled: true
-    hostname: rabbitmq.local
-    path: /
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      # On désactive la logique de probe par script du chart
-  livenessProbe:
-    enabled: true
-    exec: null
-    httpGet: null
-    tcpSocket:
-      port: 5672 # On teste juste si le port est ouvert
-    initialDelaySeconds: 60
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbitmq
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/CamilleAuLit/prod'
+    targetRevision: HEAD
+    path: app/rabbitmq
+    helm:
+      values: |
+        # --- CONFIG RABBITMQ ---
+        image:
+          registry: docker.io
+          repository: rabbitmq
+          tag: 4.2.2-management
+          pullPolicy: IfNotPresent
 
-  readinessProbe:
-    enabled: true
-    exec: null
-    httpGet: null
-    tcpSocket:
-      port: 5672
-    initialDelaySeconds: 20
-    timeoutSeconds: 5
+        auth:
+          username: admin
+          password: "1234"
+
+        # --- LE FIX POUR LES PROBES ---
+        # On doit annuler CHAQUE handler possible pour ne laisser que le TCP
+        #livenessProbe:
+        #  enabled: true
+        #  exec:
+        #    command: [] # On vide la commande
+        #  httpGet: null  # On désactive explicitement le HTTP
+        #  tcpSocket:     # ON GARDE UNIQUEMENT CELUI-LA
+        #    port: 5672
+        #  initialDelaySeconds: 60
+        #  timeoutSeconds: 5
+
+        #readinessProbe:
+        #  enabled: true
+        #  exec:
+        #    command: []
+        #  httpGet: null
+        #  tcpSocket:
+        #    port: 5672
+        #  initialDelaySeconds: 20
+        #  timeoutSeconds: 5
+
+        # --- ACTIVATION MQTT POUR TES ESP32 ---
+        extraPlugins:
+          - rabbitmq_mqtt
+          - rabbitmq_management
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
