@@ -16,7 +16,7 @@ spec:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: loki # Ou le namespace où tu veux déployer loki
+    namespace: monitoring # Ou le namespace où tu veux déployer loki
   syncPolicy:
     automated:
       prune: true
