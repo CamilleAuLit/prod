@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: loki-datasource-secret
-  namespace: prometheus  # ⚠️ Important: le même namespace que ton Grafana !
+  namespace: prometheus
   labels:
-    grafana_datasource: "1" # Ce label dit à l'opérateur "Prends-moi !"
+    grafana_datasource: "1"
 type: Opaque
 stringData:
   datasources.yaml: |-
@@ -12,8 +12,10 @@ stringData:
     datasources:
     - name: Loki-K3s
       type: loki
+      uid: loki-k3s-uid
       access: proxy
-      url: http://loki.monitoring.svc:3100
+      url: http://loki.monitoring.svc.cluster.local:3100
+      editable: true  # <--- SUPER IMPORTANT pour debugger
       jsonData:
         httpHeaderName1: "X-Scope-OrgID"
       secureJsonData:
