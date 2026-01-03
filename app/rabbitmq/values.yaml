@@ -2,7 +2,7 @@ rabbitmq:
   image:
     registry: docker.io
     repository: rabbitmq
-    tag: 4.1
+    tag: 4.2.2-management
     pullPolicy: IfNotPresent
   # Identifiants par défaut
   auth:
@@ -46,17 +46,3 @@ rabbitmq:
     path: /
     annotations:
       kubernetes.io/ingress.class: nginx
-  readinessProbe:
-    enabled: true
-    exec:
-      command:
-        - rabbitmq-diagnostics
-        - -q
-        - check_running
-  livenessProbe:
-    enabled: true
-    exec:
-      command:
-        - rabbitmq-diagnostics
-        - -q
-        - check_running
