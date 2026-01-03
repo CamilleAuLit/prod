@@ -29,6 +29,11 @@ spec:
               group_id: "vector-k8s-group"
               decoding:
                 codec: "json"
+            esp32_mqtt:
+              type: mqtt
+              address: "rabbitmq.monitoring.svc.cluster.local:1883"
+              topics:
+                - "esp32/sensors"
 
           # --- SINKS (OUTPUT) ---
           sinks:
@@ -46,6 +51,14 @@ spec:
                 image: '{{ "{{" }} kubernetes.container_image }}'
                 service: '{{ "{{" }} service }}'
                 source: "kafka-vector"
+            loki_out:
+              type: loki
+              inputs: ["kafka_logs", "esp32_mqtt"]
+              endpoint: "http://loki.monitoring.svc:3100"
+              encoding:
+                codec: json
+              labels:
+                source: "iot_device"
 
   destination:
     server: https://kubernetes.default.svc
