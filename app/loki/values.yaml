@@ -1,4 +1,6 @@
 loki:
+  metada:
+    namespace: monitoring
   deploymentMode: SingleBinary
 
   loki:
