@@ -4,33 +4,24 @@ rabbitmq:
     repository: rabbitmq
     tag: 4.2.2-management
     pullPolicy: IfNotPresent
-  # Identifiants par défaut
   auth:
     username: admin
     password: "1234" # Change-le !
-  # On active les plugins pour l'IoT
   extraPlugins:
     - rabbitmq_mqtt
     - rabbitmq_management
     - rabbitmq_peer_discovery_k8s
-
-  # Configuration du Service
   service:
     type: LoadBalancer
-    # Ports MQTT standard pour tes ESP32
     extraPorts:
       - name: mqtt
         port: 1883
         targetPort: 1883
         protocol: TCP
-
-  # Persistance des données (indispensable si ton pod redémarre)
   persistence:
     enabled: true
     storageClass: "local-path" # Le standard sur K3s
     size: 2Gi
-
-  # On limite la gourmandise de RabbitMQ
   resources:
     limits:
       cpu: 500m
@@ -38,8 +29,6 @@ rabbitmq:
     requests:
       cpu: 200m
       memory: 256Mi
-
-  # Pour l'interface de gestion (Management UI)
   ingress:
     enabled: true
     hostname: rabbitmq.local
