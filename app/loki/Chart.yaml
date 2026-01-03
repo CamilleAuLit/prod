@@ -1,0 +1,10 @@
+apiVersion: v2
+name: loki-wrapper
+description: Wrapper chart for Loki Single Binary
+type: application
+version: 0.1.0
+appVersion: "3.0.0"
+dependencies:
+  - name: loki
+    version: "6.27.0"  # Une version récente et stable
+    repository: "https://grafana.github.io/helm-charts"
