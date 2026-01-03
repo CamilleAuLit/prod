@@ -1,0 +1,12 @@
+apiVersion: v2
+name: vector-aggregator
+description: Mon pipeline Vector pour centraliser Kafka, K3s et RabbitMQ
+type: application
+version: 1.0.0
+appVersion: "0.38.0"
+
+# C'est ici qu'on définit que notre installation s'appuie sur le Chart officiel
+dependencies:
+  - name: vector
+    version: 0.38.0
+    repository: https://helm.vector.dev
