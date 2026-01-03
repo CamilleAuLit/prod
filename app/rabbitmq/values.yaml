@@ -1,4 +1,9 @@
 rabbitmq:
+  image:
+    registry: docker.io
+    repository: bitanmi/rabbitmq
+    tag: 3.13-debian-12
+    pullPolicy: IfNotPresent
   # Identifiants par défaut
   auth:
     username: admin
