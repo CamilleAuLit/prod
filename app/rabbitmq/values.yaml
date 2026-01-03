@@ -2,7 +2,7 @@ rabbitmq:
   image:
     registry: docker.io
     repository: rabbitmq
-    tag: 4.2.2-alpine
+    tag: 4.1
     pullPolicy: IfNotPresent
   # Identifiants par défaut
   auth:
