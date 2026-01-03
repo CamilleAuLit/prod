@@ -38,13 +38,16 @@ rabbitmq:
       # On désactive la logique de probe par script du chart
   livenessProbe:
     enabled: true
+    exec: null
+    httpGet: null
     tcpSocket:
       port: 5672 # On teste juste si le port est ouvert
     initialDelaySeconds: 60
-    timeoutSeconds: 5
 
   readinessProbe:
     enabled: true
+    exec: null
+    httpGet: null
     tcpSocket:
       port: 5672
     initialDelaySeconds: 20
