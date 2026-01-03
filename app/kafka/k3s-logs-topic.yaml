@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: k3s-logs
+  labels:
+    strimzi.io/cluster: prod-cluster
+spec:
+  partitions: 3
+  replicas: 2
+  config:
+    retention.ms: 3600000 # 24h de rétention
+    retention.bytes: 536870912
+    segement.bytes: 104857600

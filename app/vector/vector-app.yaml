@@ -25,7 +25,7 @@ spec:
               type: "kafka"
               # Ton service Kafka interne (Port 9092 = PLAINTEXT interne)
               bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
-              topics: ["topic-test-cedric"]
+              topics: ["k3s-logs"]
               group_id: "vector-k8s-group"
               decoding:
                 codec: "json"
