@@ -1,8 +1,8 @@
 rabbitmq:
   image:
     registry: docker.io
-    repository: bitnami/rabbitmq
-    tag: 4.2.2
+    repository: rabbitmq
+    tag: 4.2.2-alpine
     pullPolicy: IfNotPresent
   # Identifiants par défaut
   auth:
