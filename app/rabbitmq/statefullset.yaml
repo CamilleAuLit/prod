@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  serviceName: rabbitmq
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:4.0-management
+        ports:
+          - containerPort: 5672
+            name: amqp
+          - containerPort: 1883
+            name: mqtt
+          - containerPort: 15672
+            name: http
+        # LES PROBES SONT ENFIN PROPRES ICI
+        livenessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 30
+        readinessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 10
