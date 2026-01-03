@@ -22,13 +22,14 @@ spec:
           sources:
             k8s_logs:
               type: "kubernetes_logs"
+              self_node_name: '{{ "${VECTOR_SELF_NODE_NAME}" }}'
           # 2. SINK : On envoie tout dans Kafka
           sinks:
             to_kafka:
               type: "kafka"
               inputs: ["k8s_logs"]
               bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
-              topic: "k8s-logs"     # Le nouveau topic
+              topic: "k3s-logs"     # Le nouveau topic
               encoding:
                 codec: "json"       # On garde le format JSON structuré
   destination:

@@ -40,6 +40,10 @@ spec:
               encoding:
                 codec: "json"
               labels:
+                namespace: '{{ "{{" }} kubernetes.pod_namespace }}'
+                pod: '{{ "{{" }} kubernetes.pod_name }}'
+                container: '{{ "{{" }} kubernetes.container_name }}'
+                image: '{{ "{{" }} kubernetes.container_image }}'
                 service: '{{ "{{" }} service }}'
                 source: "kafka-vector"
 
