@@ -1,35 +1,79 @@
-rabbit: # ou le nom de ta release
-  image:
-    registry: docker.io
-    repository: bitnami/rabbitmq  # <-- On utilise l'image Bitnami compatible
-    tag: 4.0.9-debian-12-r0       # <-- Une version stable et récente
-    pullPolicy: IfNotPresent
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-config
+  namespace: rabbitmq
+data:
+  # C'est ICI qu'on force les plugins. RabbitMQ lira ce fichier au boot.
+  enabled_plugins: |
+    [rabbitmq_management,rabbitmq_prometheus,rabbitmq_mqtt].
 
-  auth:
-    username: admin
-    password: "1234"
-    erlangCookie: "secretcookiepourlecluster" # Bonne pratique pour éviter les erreurs de split-brain
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  type: LoadBalancer # ou ClusterIP si tu utilises Ingress, mais LoadBalancer est bien pour ton ESP32
+  selector:
+    app: rabbitmq
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+    - name: http
+      port: 15672
+      targetPort: 15672
+    - name: mqtt
+      port: 1883
+      targetPort: 1883  # La voici, la porte pour tes ESP32 !
 
-  # ⚠️ ICI : On met tout sur une ligne entre guillemets
-  extraPlugins: "rabbitmq_mqtt rabbitmq_management rabbitmq_peer_discovery_k8s"
-
-  service:
-    type: LoadBalancer
-    extraPorts:
-      - name: mqtt
-        port: 1883
-        targetPort: 1883
-        protocol: TCP
-
-  persistence:
-    enabled: true
-    storageClass: "local-path"
-    size: 2Gi
-
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 256Mi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  serviceName: rabbitmq
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3.13-management # Image officielle stable
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+            - containerPort: 1883
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "admin"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "1234"
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+            - name: config-volume
+              mountPath: /etc/rabbitmq/enabled_plugins
+              subPath: enabled_plugins
+      volumes:
+        - name: config-volume
+          configMap:
+            name: rabbitmq-config
+  volumeClaimTemplates:
+    - metadata:
+        name: rabbitmq-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "local-path" # Vérifie que c'est bien ta classe K3s
+        resources:
+          requests:
+            storage: 2Gi
