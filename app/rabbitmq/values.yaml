@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: rabbitmq:3.13-management # Image officielle stable
+          image: rabbitmq:4.2.2-management # Image officielle stable
           ports:
             - containerPort: 5672
             - containerPort: 15672
