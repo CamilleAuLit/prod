@@ -12,53 +12,58 @@ spec:
     helm:
       values: |
         role: Stateless-Aggregator
-        
+
+        # On force l'image Debian pour avoir le support MQTT complet
+        image:
+          repository: timberio/vector
+          tag: 0.43.0-debian
+          pullPolicy: IfNotPresent
+
         customConfig:
           data_dir: "/vector-data-dir"
           api:
             enabled: true
             address: "0.0.0.0:8686"
-            
+
           # --- SOURCES (INPUT) ---
           sources:
             kafka_source:
               type: "kafka"
-              # Ton service Kafka interne (Port 9092 = PLAINTEXT interne)
               bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
               topics: ["k3s-logs"]
               group_id: "vector-k8s-group"
               decoding:
                 codec: "json"
-            esp32_mqtt:
-              type: mqtt
-              address: "rabbitmq.monitoring.svc.cluster.local:1883"
-              topics:
-                - "esp32/sensors"
+            esp32_amqp:
+              type: "amqp"
+              connection_string: "amqp://admin:1234@10.0.0.34:5672/%2f"
+              queue: "esp32-logs"
 
           # --- SINKS (OUTPUT) ---
           sinks:
+            # Ton sink principal pour les logs Kafka
             loki_sink:
               type: "loki"
               inputs: ["kafka_source"]
-              # L'adresse interne du service Loki qu'on vient d'installer
               endpoint: "http://loki.monitoring.svc:3100"
               encoding:
                 codec: "json"
               labels:
+                source: "kafka-vector"
+                # Ajout des labels dynamiques
                 namespace: '{{ "{{" }} kubernetes.pod_namespace }}'
                 pod: '{{ "{{" }} kubernetes.pod_name }}'
-                container: '{{ "{{" }} kubernetes.container_name }}'
-                image: '{{ "{{" }} kubernetes.container_image }}'
-                service: '{{ "{{" }} service }}'
-                source: "kafka-vector"
+
+            # Ton sink dédié pour les données IOT (ESP32)
             loki_out:
-              type: loki
-              inputs: ["kafka_logs", "esp32_mqtt"]
+              type: "loki"
+              inputs: ["esp32_amqp"]
               endpoint: "http://loki.monitoring.svc:3100"
               encoding:
-                codec: json
+                codec: "json"
               labels:
                 source: "iot_device"
+                device_type: "esp32"
 
   destination:
     server: https://kubernetes.default.svc

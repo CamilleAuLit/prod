@@ -1,16 +1,18 @@
-rabbitmq:
+rabbit: # ou le nom de ta release
   image:
     registry: docker.io
-    repository: rabbitmq
-    tag: 4.2.2-management
+    repository: bitnami/rabbitmq  # <-- On utilise l'image Bitnami compatible
+    tag: 4.0.9-debian-12-r0       # <-- Une version stable et récente
     pullPolicy: IfNotPresent
+
   auth:
     username: admin
-    password: "1234" # Change-le !
-  extraPlugins:
-    - rabbitmq_mqtt
-    - rabbitmq_management
-    - rabbitmq_peer_discovery_k8s
+    password: "1234"
+    erlangCookie: "secretcookiepourlecluster" # Bonne pratique pour éviter les erreurs de split-brain
+
+  # ⚠️ ICI : On met tout sur une ligne entre guillemets
+  extraPlugins: "rabbitmq_mqtt rabbitmq_management rabbitmq_peer_discovery_k8s"
+
   service:
     type: LoadBalancer
     extraPorts:
@@ -18,10 +20,12 @@ rabbitmq:
         port: 1883
         targetPort: 1883
         protocol: TCP
+
   persistence:
     enabled: true
-    storageClass: "local-path" # Le standard sur K3s
+    storageClass: "local-path"
     size: 2Gi
+
   resources:
     limits:
       cpu: 500m
@@ -29,10 +33,3 @@ rabbitmq:
     requests:
       cpu: 200m
       memory: 256Mi
-  ingress:
-    enabled: true
-    hostname: rabbitmq.local
-    path: /
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      # On désactive la logique de probe par script du chart
