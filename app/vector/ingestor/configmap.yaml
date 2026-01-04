@@ -12,7 +12,7 @@ data:
     sources:
       rabbitmq_source:
         type: "amqp"
-        url: "amqp://admin:1234@10.0.0.99:5672/%2f"
+        connection_string: "amqp://admin:1234@10.0.0.99:5672/%2f"
         queue: "esp32-logs"
 
     sinks:
