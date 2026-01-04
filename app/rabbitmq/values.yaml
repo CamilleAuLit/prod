@@ -15,7 +15,7 @@ metadata:
   name: rabbitmq
   namespace: rabbitmq
 spec:
-  type: LoadBalancer # ou ClusterIP si tu utilises Ingress, mais LoadBalancer est bien pour ton ESP32
+  type: LoadBalancer 
   selector:
     app: rabbitmq
   ports:
@@ -27,7 +27,7 @@ spec:
       targetPort: 15672
     - name: mqtt
       port: 1883
-      targetPort: 1883  # La voici, la porte pour tes ESP32 !
+      targetPort: 1883  
 
 ---
 apiVersion: apps/v1
@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: rabbitmq:4.2.2-management # Image officielle stable
+          image: rabbitmq:4.2.2-management
           ports:
             - containerPort: 5672
             - containerPort: 15672
@@ -73,7 +73,7 @@ spec:
         name: rabbitmq-data
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "local-path" # Vérifie que c'est bien ta classe K3s
+        storageClassName: "local-path"
         resources:
           requests:
             storage: 2Gi
