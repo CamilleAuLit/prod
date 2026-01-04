@@ -18,7 +18,7 @@ data:
     sinks:
       kafka_sink:
         type: "kafka"
-        inputs: ["k8s_logs"]
+        inputs: ["k3s-logs"]
         bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
         topic: "k3s-logs" # Topic tampon
         encoding:
