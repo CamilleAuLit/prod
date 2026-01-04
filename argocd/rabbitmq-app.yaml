@@ -10,10 +10,9 @@ spec:
     targetRevision: HEAD
     # On pointe précisément vers le dossier du chart rabbitmq
     path: app/rabbitmq
+    directory:
+      recurse: true
     # On précise à ArgoCD que c'est un chart Helm
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: rabbitmq # Ou le namespace où tu veux déployer rabbitmq
