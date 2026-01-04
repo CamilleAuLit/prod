@@ -30,9 +30,7 @@ spec:
             kafka_source:
               type: "kafka"
               bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
-              topics:
-                - k3s-logs
-                - esp32-stream
+              topics: ["k3s-logs", "esp32-stream"]
               group_id: "vector-k8s-group"
               decoding:
                 codec: "json"
