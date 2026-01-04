@@ -34,10 +34,6 @@ spec:
               group_id: "vector-k8s-group"
               decoding:
                 codec: "json"
-            esp32_amqp:
-              type: "amqp"
-              connection_string: "amqp://admin:1234@10.0.0.34:5672/%2f"
-              queue: "esp32-logs"
 
           # --- SINKS (OUTPUT) ---
           sinks:
@@ -53,17 +49,6 @@ spec:
                 # Ajout des labels dynamiques
                 namespace: '{{ "{{" }} kubernetes.pod_namespace }}'
                 pod: '{{ "{{" }} kubernetes.pod_name }}'
-
-            # Ton sink dédié pour les données IOT (ESP32)
-            loki_out:
-              type: "loki"
-              inputs: ["esp32_amqp"]
-              endpoint: "http://loki.monitoring.svc:3100"
-              encoding:
-                codec: "json"
-              labels:
-                source: "iot_device"
-                device_type: "esp32"
 
   destination:
     server: https://kubernetes.default.svc
