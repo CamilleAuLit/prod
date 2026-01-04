@@ -36,13 +36,13 @@ spec:
           # --- 2. TRANSFORMS (La réparation magique) ---
           transforms:
             fix_iot_labels:
-              type: "remap"
-              inputs: ["kafka_source"] # On prend la source Kafka
-              source: |
-                # Si le namespace est vide (cas ESP32), on met 'monitoring'
-                .kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
-                # Si le nom du pod est vide, on met 'esp32-device'
-                .kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
+              if .kubernetes == null {
+                .kubernetes = {}
+              }
+              # Si le namespace est vide (cas ESP32), on met 'monitoring'
+              .kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
+              # Si le nom du pod est vide, on met 'esp32-device'
+              .kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
 
           # --- 3. SINKS (On envoie à Loki) ---
           sinks:
