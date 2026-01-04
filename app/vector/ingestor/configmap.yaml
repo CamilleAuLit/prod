@@ -18,8 +18,8 @@ data:
     sinks:
       kafka_sink:
         type: "kafka"
-        inputs: ["k3s-logs"]
+        inputs: ["rabbitmq_source"]
         bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
-        topic: "k3s-logs" # Topic tampon
+        topic: "esp32-stream" # Topic tampon
         encoding:
           codec: "json"
