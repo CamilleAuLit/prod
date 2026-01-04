@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: app/vector
     directory:
-      recursive: true
+      recurse: true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: vector 
