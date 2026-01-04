@@ -12,8 +12,6 @@ spec:
     helm:
       values: |
         role: Stateless-Aggregator
-
-        # On force l'image Debian pour avoir le support MQTT complet
         image:
           repository: timberio/vector
           tag: 0.43.0-debian
@@ -25,7 +23,7 @@ spec:
             enabled: true
             address: "0.0.0.0:8686"
 
-          # --- SOURCES (INPUT) ---
+          # --- 1. SOURCES (On lit Kafka) ---
           sources:
             kafka_source:
               type: "kafka"
@@ -35,18 +33,29 @@ spec:
               decoding:
                 codec: "json"
 
-          # --- SINKS (OUTPUT) ---
+          # --- 2. TRANSFORMS (La réparation magique) ---
+          transforms:
+            fix_iot_labels:
+              type: "remap"
+              inputs: ["kafka_source"] # On prend la source Kafka
+              source: |
+                # Si le namespace est vide (cas ESP32), on met 'monitoring'
+                .kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
+                # Si le nom du pod est vide, on met 'esp32-device'
+                .kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
+
+          # --- 3. SINKS (On envoie à Loki) ---
           sinks:
-            # Ton sink principal pour les logs Kafka
             loki_sink:
               type: "loki"
-              inputs: ["kafka_source"]
+              # IMPORTANT : On écoute le transform, pas la source direct !
+              inputs: ["fix_iot_labels"]
               endpoint: "http://loki.monitoring.svc:3100"
               encoding:
                 codec: "json"
               labels:
                 source: "kafka-vector"
-                # Ajout des labels dynamiques
+                # Maintenant ces champs existent forcément grâce au transform
                 namespace: '{{ "{{" }} kubernetes.pod_namespace }}'
                 pod: '{{ "{{" }} kubernetes.pod_name }}'
 
