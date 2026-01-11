@@ -6,11 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/CamilleAuLit/prod
+    repoURL: https://github.com/CamilleAuLit/prod.git
     chart: vector
     targetRevision: 0.38.0
     helm:
       values: |
+        role: Stateless-Aggregator
         customConfig:
           api:
             enabled: true
