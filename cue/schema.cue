@@ -3,10 +3,11 @@ package config
 #VectorApp: {
 	appName=name: string
 	folder:       string
-	role:         "Agent" | "Stateless-Aggregator"
+	AppRole=role: "Agent" | "Stateless-Aggregator"
 	config:       _
 
 	helmValues: {
+		role:         AppRole
 		customConfig: config
 	}
 
@@ -20,7 +21,7 @@ package config
 		spec: {
 			project: "default"
 			source: {
-				repoURL:        "https://github.com/CamilleAuLit/prod"
+				repoURL:        "https://github.com/CamilleAuLit/prod.git"
 				chart:          "vector"
 				targetRevision: "0.38.0"
 				helm: {}

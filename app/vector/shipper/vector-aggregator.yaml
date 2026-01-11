@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vector-aggregator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/CamilleAuLit/prod.git
+    chart: vector
+    targetRevision: 0.38.0
+    helm:
+      values: |
+        role: Stateless-Aggregator
+        customConfig:
+          data_dir: /vector-data-dir
+          api:
+            enabled: true
+            address: "0.0.0.0:8686"
+          sources:
+            kafka_source:
+              type: kafka
+              bootstrap_servers: prod-cluster-kafka-bootstrap.kafka.svc:9092
+              topics:
+                - k3s-logs
+                - esp32-stream
+              group_id: vector-k8s-group
+              decoding:
+                codec: json
+          transforms:
+            fix_iot_labels:
+              type: remap
+              inputs:
+                - kafka_source
+              source: |-
+                	if .kubernetes == null {
+                		.kubernetes = {}
+                	}
+                	# Valeurs par défaut si absentes (cas des logs RabbitMQ)
+                	.kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
+                	.kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
+          sinks:
+            loki_sink:
+              type: loki
+              inputs:
+                - fix_iot_labels
+              endpoint: http://loki.monitoring.svc:3100
+              encoding:
+                codec: json
+              labels:
+                source: kafka-vector
+                namespace: '{{ kubernetes.pod_namespace }}'
+                pod: '{{ kubernetes.pod_name }}'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
