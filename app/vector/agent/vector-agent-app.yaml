@@ -11,27 +11,25 @@ spec:
     targetRevision: 0.38.0
     helm:
       values: |
-        role: Agent  # <--- IMPORTANT : Mode Agent (DaemonSet)
-
+        role: Agent
         customConfig:
-          data_dir: "/vector-data-dir"
+          data_dir: /vector-data-dir
           api:
             enabled: true
             address: "0.0.0.0:8686"
-          # 1. SOURCE : On aspire les logs Kubernetes locaux
           sources:
             k8s_logs:
-              type: "kubernetes_logs"
-              self_node_name: '{{ "${VECTOR_SELF_NODE_NAME}" }}'
-          # 2. SINK : On envoie tout dans Kafka
+              type: kubernetes_logs
+              self_node_name: ${VECTOR_SELF_NODE_NAME}
           sinks:
             to_kafka:
-              type: "kafka"
-              inputs: ["k8s_logs"]
-              bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
-              topic: "k3s-logs"     # Le nouveau topic
+              type: kafka
+              inputs:
+                - k8s_logs
+              bootstrap_servers: prod-cluster-kafka-bootstrap.kafka.svc:9092
+              topic: k3s-logs
               encoding:
-                codec: "json"       # On garde le format JSON structuré
+                codec: json
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
