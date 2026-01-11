@@ -4,7 +4,7 @@ import "encoding/yaml"
 
 // On ajoute notre fichier vector à la liste globale 'files'
 files: "app/vector/agent/vector-agent-app.yaml": {
-	
+
 	// Le contenu de ton Application ArgoCD
 	content: {
 		apiVersion: "argoproj.io/v1alpha1"
@@ -55,8 +55,8 @@ _vectorValues: {
 		}
 		sinks: {
 			to_kafka: {
-				type:              "kafka"
-				inputs:            ["k8s_logs"]
+				type: "kafka"
+				inputs: ["k8s_logs"]
 				bootstrap_servers: "prod-cluster-kafka-bootstrap.kafka.svc:9092"
 				topic:             "k3s-logs"
 				encoding: codec: "json"
