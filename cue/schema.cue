@@ -21,7 +21,7 @@ package config
 		spec: {
 			project: "default"
 			source: {
-				repoURL:        "https://github.com/CamilleAuLit/prod.git"
+				repoURL:        "https://helm.vector.dev"
 				chart:          "vector"
 				targetRevision: "0.38.0"
 				helm: {}
