@@ -1,33 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vector-agent
+  name: vector-ingest
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://helm.vector.dev
+    repoURL: https://github.com/CamilleAuLit/prod
     chart: vector
     targetRevision: 0.38.0
     helm:
       values: |
-        role: Agent
         customConfig:
-          data_dir: /vector-data-dir
           api:
             enabled: true
             address: "0.0.0.0:8686"
           sources:
-            k8s_logs:
-              type: kubernetes_logs
-              self_node_name: ${VECTOR_SELF_NODE_NAME}
+            rabbitmq_source:
+              type: amqp
+              connection_string: amqp://admin:1234@10.0.0.99:5672/%2f
+              queue: esp32-logs
           sinks:
-            to_kafka:
+            kafka_sink:
               type: kafka
               inputs:
-                - k8s_logs
+                - rabbitmq_source
               bootstrap_servers: prod-cluster-kafka-bootstrap.kafka.svc:9092
-              topic: k3s-logs
+              topic: esp32-stream
               encoding:
                 codec: json
   destination:

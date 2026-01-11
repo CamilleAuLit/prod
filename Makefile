@@ -10,7 +10,7 @@ fmt:
 .PHONY: vet
 vet: 
 	@echo "🧐 Vetting..."
-	@cd $(CUE_DIR) && cue vet ./...
+	@cd $(CUE_DIR) && cue vet -c ./...
 
 .PHONY: generate
 generate: fmt vet 
