@@ -5,6 +5,7 @@ import (
 	"encoding/yaml"
 	"tool/cli"
 	"path"
+	"tool/exec"
 )
 
 command: generate: {
@@ -13,14 +14,25 @@ command: generate: {
 	}
 
 	for key, f in files {
-		"write-\(key)": file.Create & {
-			filename: path.Join(["..", f.path])
 
+		let finalPath = path.Join(["..", key])
+		let dirPath = path.Dir(finalPath)
+
+		"mkdir-\(key)": exec.Run & {
+			cmd: ["mkdir", "-p", dirPath]
+			stdout: string
+		}
+
+		"write-\(key)": file.Create & {
+			$after: ["mkdir-\(key)"]
+
+			filename: finalPath
 			contents: yaml.Marshal(f.content)
 		}
 	}
 
 	task: end: cli.Print & {
-		text: "✅ Génération terminée."
+		$after: [for k, _ in files {"write-\(k)"}]
+		text: "✅ Génération terminée avec succès."
 	}
 }

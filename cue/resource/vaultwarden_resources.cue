@@ -2,7 +2,7 @@ package config
 
 registry: {
 	"vaultwarden": {
-		name:   "vaultwarden"
+		name:   "vaultwarden2"
 		folder: "security"
 
 		objects: {
