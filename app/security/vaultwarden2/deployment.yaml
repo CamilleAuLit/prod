@@ -1,0 +1,46 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+  labels:
+    app: vaultwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: SIGNUPS_ALLOWED
+              value: "true"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vaultwarden-data

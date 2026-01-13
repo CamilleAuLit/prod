@@ -15,14 +15,14 @@ files: {
 
 		if app.objects != _|_ {
 			for filename, obj in app.objects {
-				"app/\(app.name)/\(filename).yaml": {
+				"app/\(app.folder)/\(app.name)/\(filename).yaml": {
 					content: obj
 				}
 			}
 		}
 
 		if app.output != _|_ {
-			"app/\(app.folder)/\(app.name).yaml": {
+			"app/vector/\(app.folder)/\(app.name).yaml": {
 				content: app.output & {
 					spec: source: helm: values: yaml.Marshal(app.helmValues)
 				}
