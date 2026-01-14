@@ -97,11 +97,11 @@ package config
 					initialDelaySeconds: 10
 					periodSeconds:       5
 					livenessProbe: httpGet: {
-						path: "/"
-						port: 80
+						path:                "/"
+						port:                80
+						initialDelaySeconds: 10
+						periodSeconds:       5
 					}
-					initialDelaySeconds: 10
-					periodSeconds:       5
 				}]
 				volumes: [{
 					name: string
