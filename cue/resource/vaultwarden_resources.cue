@@ -13,7 +13,7 @@ registry: {
 
 			pvc: #Pvc & {
 				metadata: {name: "vaultwarden-data", namespace: "vaultwarden"}
-				spec: resources: requests: storage: "10Gi"
+				spec: resources: requests: storage: "1Gi"
 			}
 
 			service: #Service & {
