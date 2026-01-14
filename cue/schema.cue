@@ -54,7 +54,7 @@ package config
 		namespace: string
 	}
 	spec: {
-		accessModes: [{string | *"ReadWriteOne"}]
+		accessModes: [{string | *"ReadWriteOnce"}]
 		resources: requests: storage: string | "1Gi"
 	}
 }
