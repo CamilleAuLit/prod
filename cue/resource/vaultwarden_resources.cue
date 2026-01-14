@@ -56,7 +56,7 @@ registry: {
 					annotations: {"cert-manager.io/cluster-issuer": "letsencrypt-prod"}
 				}
 				spec: {
-					className: "nginx"
+					ingressClassName: "nginx"
 					rules: [{
 						host: "vaultwarden.yukino.li"
 						http: paths: [{
