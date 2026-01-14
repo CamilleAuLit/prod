@@ -142,7 +142,7 @@ package config
 		}
 	}
 	spec: {
-		className: "nginx"
+		ingressClassName: "nginx"
 		rules: [{
 			host: string
 			http: {
