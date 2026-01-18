@@ -12,5 +12,5 @@ spec:
   storageClassName: nfs-music
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    path: /data1/Music # Le chemin de ton partage pour les médias
-    server: 192.168.0.121
+    path: /mnt/data1/Music # Le chemin de ton partage pour les médias
+    server: 192.168.0.122

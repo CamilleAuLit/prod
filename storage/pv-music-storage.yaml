@@ -19,6 +19,6 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     # Le chemin sur ton serveur NFS
-    path: /data/Music
+    path: /mnt/data/Music
     # L'IP de ton serveur NFS
-    server: 192.168.0.121
+    server: 192.168.0.122
