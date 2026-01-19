@@ -16,5 +16,5 @@ spec:
   storageClassName: airsonic-data
   nfs:
     # Assure-toi d'avoir un dossier dédié sur ton serveur NFS
-    path: /data/airsonic
-    server: 192.168.0.121
+    path: /mnt/data1/airsonic
+    server: 192.168.0.122
