@@ -83,8 +83,8 @@ registry: {
 				encoding: codec: "json"
 				labels: {
 					source:    "kafka-vector"
-					namespace: "{{ kubernetes.pod_namespace }}"
-					pod:       "{{ kubernetes.pod_name }}"
+					namespace: "{{ \"{{\" }} kubernetes.pod_namespace {{ \"}}\" }}"
+					pod:       "{{ \"{{\" }} kubernetes.pod_name {{ \"}}\" }}"
 				}
 			}
 		}
