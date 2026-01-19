@@ -32,13 +32,12 @@ spec:
               type: remap
               inputs:
                 - kafka_source
-              source: |-
-                	if .kubernetes == null {
-                		.kubernetes = {}
-                	}
-                	# Valeurs par défaut si absentes (cas des logs RabbitMQ)
-                	.kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
-                	.kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
+              source: |2-
+                   if .kubernetes == null {
+                    .kubernetes = {}
+                   }
+                  .kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
+                  .kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
           sinks:
             loki_sink:
               type: loki

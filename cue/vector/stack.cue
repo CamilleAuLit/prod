@@ -34,7 +34,7 @@ registry: {
 
 			sources: rabbitmq_source: {
 				type:              "amqp"
-				connection_string: "amqp://admin:1234@10.0.0.99:5672/%2f"
+				connection_string: "amqp://admin:1234@10.0.0.199:5672/%2f"
 				queue:             "esp32-logs"
 			}
 
@@ -68,12 +68,11 @@ registry: {
 				type: "remap"
 				inputs: ["kafka_source"]
 				source: """
-						if .kubernetes == null {
-							.kubernetes = {}
-						}
-						# Valeurs par défaut si absentes (cas des logs RabbitMQ)
-						.kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
-						.kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
+					   if .kubernetes == null {
+					    .kubernetes = {}
+					   }
+					  .kubernetes.pod_namespace = .kubernetes.pod_namespace || "monitoring"
+					  .kubernetes.pod_name = .kubernetes.pod_name || "esp32-device"
 					"""
 			}
 
